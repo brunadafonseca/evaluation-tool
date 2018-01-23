@@ -11,7 +11,7 @@ export default (state = [], { type, payload } = {}) => {
     case FETCHED_BATCHES:
       return [ ...payload ]
 
-    case FETCHED_ONE_BATCH :
+    case FETCHED_ONE_BATCH:
       return { ...payload }
 
     default :

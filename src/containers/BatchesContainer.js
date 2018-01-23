@@ -18,6 +18,10 @@ class BatchesContainer extends PureComponent {
   renderBatch = (batch) => {
     return (
       <BatchItem
+        number={batch.number}
+        startDate={batch.startDate.slice(0, 10)}
+        endDate={batch.endDate.slice(0, 10)}
+        batchId={batch._id}
       />
     )
   }
