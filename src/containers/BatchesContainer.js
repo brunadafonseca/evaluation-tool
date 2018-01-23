@@ -6,15 +6,23 @@ import Menu from 'material-ui/Menu'
 import './BatchesContainer.css'
 import { CreateBatch } from './CreateBatch'
 import createBatch from '../actions/batches/create'
+import fetchBatches from '../actions/batches/fetch'
+import Batch from './Batch'
 
 class BatchesContainer extends PureComponent {
+
+  componentWillMount() {
+    this.props.fetchBatches()
+  }
+
   renderBatch = (batch) => {
     return (
-      <div>
-        <p>Batch #{batch.number}</p>
-        <p>{ batch.startDate }</p>
-        <p>{ batch.endDate }</p>
-      </div>
+      <Batch
+        number={batch.number}
+        startDate={batch.startDate}
+        endDate={batch.endDate}
+        batchId={batch._id}
+      />
     )
   }
 
@@ -35,4 +43,4 @@ class BatchesContainer extends PureComponent {
 
 const mapStateToProps = ({ batches }) => ({ batches })
 
-export default connect(mapStateToProps, { createBatch })(BatchesContainer)
+export default connect(mapStateToProps, { createBatch, fetchBatches })(BatchesContainer)
