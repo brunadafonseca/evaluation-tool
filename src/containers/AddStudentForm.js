@@ -100,4 +100,4 @@ export class AddStudentsForm extends PureComponent {
 
 
 
-export default connect(null, { createBatch })(CreateBatch)
+export default connect(null, { createBatch })(CreateBatchForm)

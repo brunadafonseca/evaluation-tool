@@ -4,10 +4,10 @@ import { push } from 'react-router-redux'
 import Paper from 'material-ui/Paper'
 import Menu from 'material-ui/Menu'
 import './BatchesContainer.css'
-import { CreateBatch } from './CreateBatch'
+import { CreateBatchForm } from './CreateBatchForm'
 import createBatch from '../actions/batches/create'
 import fetchBatches from '../actions/batches/fetch'
-import Batch from './Batch'
+import BatchItem from './BatchItem'
 
 class BatchesContainer extends PureComponent {
 
@@ -17,11 +17,7 @@ class BatchesContainer extends PureComponent {
 
   renderBatch = (batch) => {
     return (
-      <Batch
-        number={batch.number}
-        startDate={batch.startDate}
-        endDate={batch.endDate}
-        batchId={batch._id}
+      <BatchItem
       />
     )
   }
@@ -30,7 +26,7 @@ class BatchesContainer extends PureComponent {
     return (
       <div className="BatchesContainer">
         <h1>List of batches</h1>
-        <CreateBatch createBatch={this.props.createBatch}/>
+        <CreateBatchForm createBatch={this.props.createBatch}/>
         <Paper className="paper">
           <Menu>
             {this.props.batches.map(this.renderBatch)}
