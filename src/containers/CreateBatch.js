@@ -111,6 +111,4 @@ export class CreateBatch extends PureComponent {
   }
 }
 
-
-
 export default connect(null, { createBatch })(CreateBatch)

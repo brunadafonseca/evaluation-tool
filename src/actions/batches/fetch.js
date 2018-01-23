@@ -18,13 +18,12 @@ export default () => {
 
     api.get('/batches')
       .then((result) => {
-        dispatch({ type: APP_DONE_LOADING })
-        dispatch({ type: LOAD_SUCCESS })
-
         dispatch({
           type: FETCHED_BATCHES,
           payload: result.body
         })
+        dispatch({ type: APP_DONE_LOADING })
+        dispatch({ type: LOAD_SUCCESS })
       })
       .catch((error) => {
         dispatch({ type: APP_DONE_LOADING })

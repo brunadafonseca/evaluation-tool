@@ -5,9 +5,8 @@ import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
-import addStudent from '../actions/batches/add'
+import addStudent from '../actions/batches/add-student'
 import Title from '../components/UI/Title'
-import DatePicker from 'material-ui/DatePicker'
 
 const dialogStyle = {
   width: '400px',
@@ -20,7 +19,7 @@ const buttonStyle = {
   marginLeft: '2rem',
 }
 
-export class AddStudentsForm extends PureComponent {
+export class AddStudentForm extends PureComponent {
   static propTypes = {
     addStudent: PropTypes.func.isRequired,
   }
@@ -29,12 +28,14 @@ export class AddStudentsForm extends PureComponent {
 
   submitForm(event) {
     event.preventDefault()
-    if (this.validateNumber() && this.validatePhoto()) {
+    const batchId = this.props.batchId
+    if (this.validateName() && this.validatePhoto()) {
       const student = {
-        name: this.refs.name.getValue(),
-        photo: this.refs.photo.getValue(),
+          name: this.refs.name.getValue(),
+          photo: this.refs.photo.getValue(),
+          batchId: batchId
       }
-      this.props.addStudent(student)
+      this.props.addStudent(batchId, {student})
     }
     return false
   }
@@ -91,13 +92,11 @@ export class AddStudentsForm extends PureComponent {
         <RaisedButton
           style={ buttonStyle }
           onClick={ this.submitForm.bind(this) }
-          label="Create new batch"
+          label="Add new student"
           primary={true} />
       </Paper>
     )
   }
 }
 
-
-
-export default connect(null, { createBatch })(CreateBatch)
+export default connect(null, { addStudent })(AddStudentForm)
