@@ -89,15 +89,15 @@ export class CreateBatch extends PureComponent {
               onChange={this.handleChangeMinDate}
               autoOk={true}
               floatingLabelText="Start Date"
-              defaultDate={this.state.minDate}
               disableYearSelection={false}
+              mode="landscape"
             />
             <DatePicker
               onChange={this.handleChangeMaxDate}
               autoOk={true}
               floatingLabelText="End Date"
-              defaultDate={this.state.maxDate}
               disableYearSelection={false}
+              mode="landscape"
             />
           </div>
         </form>

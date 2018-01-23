@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom'
 
 import {
   BatchesContainer,
+  BatchPage,
   Game,
   SignIn,
   SignUp
@@ -14,7 +15,7 @@ export default class Routes extends Component {
     return (
       <div>
         <Route exact path="/" component={BatchesContainer} />
-        <Route path="/play/:gameId" component={Game} />
+        <Route path="/batches/:batchId" component={BatchPage} />
         <Route path="/sign-in" component={SignIn} />
         <Route path="/sign-up" component={SignUp} />
       </div>
