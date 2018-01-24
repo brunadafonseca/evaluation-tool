@@ -1,29 +1,21 @@
 import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
 import Paper from 'material-ui/Paper'
 import Menu from 'material-ui/Menu'
 import './BatchesContainer.css'
 import { CreateBatch } from './CreateBatch'
 import createBatch from '../actions/batches/create'
 import fetchBatches from '../actions/batches/fetch'
-import Batch from './Batch'
+import BatchItem, { batchShape } from './BatchItem'
 
 class BatchesContainer extends PureComponent {
+  static propTypes = {
+    batches: PropTypes.arrayOf(batchShape).isRequired,
+  }
 
   componentWillMount() {
     this.props.fetchBatches()
-  }
-
-  renderBatch = (batch) => {
-    return (
-      <Batch
-        number={batch.number}
-        startDate={batch.startDate}
-        endDate={batch.endDate}
-        batchId={batch._id}
-      />
-    )
   }
 
   render() {
@@ -33,7 +25,7 @@ class BatchesContainer extends PureComponent {
         <CreateBatch createBatch={this.props.createBatch}/>
         <Paper className="paper">
           <Menu>
-            {this.props.batches.map(this.renderBatch)}
+            {this.props.batches.map(batch => <BatchItem { ...batch } />)}
           </Menu>
         </Paper>
       </div>

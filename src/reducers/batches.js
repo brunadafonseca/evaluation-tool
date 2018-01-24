@@ -10,10 +10,12 @@ export default (state = [], { type, payload } = {}) => {
       return [ newBatch ].concat(state)
 
     case FETCHED_BATCHES:
-      return [ ...payload ]
+      console.log(payload)
+      return payload
 
     case FETCHED_ONE_BATCH :
-      return { ...payload }
+      console.log([payload].concat(state))
+      return [payload].concat(state)
 
     case BATCH_UPDATED:
       return [{ ...state }].concat(payload)

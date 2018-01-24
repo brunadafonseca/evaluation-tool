@@ -5,7 +5,6 @@ import { Route } from 'react-router-dom'
 import {
   BatchesContainer,
   BatchPage,
-  Game,
   SignIn,
   SignUp
 } from './containers'
