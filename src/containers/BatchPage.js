@@ -7,6 +7,7 @@ import addStudent from '../actions/batches/add-student'
 import fetchStudents from '../actions/batches/fetch'
 import Student from './Student'
 import { batchShape } from './BatchItem'
+import './BatchPage.css'
 
 export class BatchPage extends PureComponent {
   state = {
@@ -24,8 +25,6 @@ export class BatchPage extends PureComponent {
 
   render() {
     const { _id, number, startDate, endDate } = this.props
-    console.log(this.state.students)
-    console.log(this.props.number)
 
     return (
       <div className="batch-container">

@@ -11,7 +11,7 @@ import DatePicker from 'material-ui/DatePicker'
 
 const dialogStyle = {
   width: '400px',
-  margin: '50px auto',
+  margin: '20px auto',
   padding: '2rem',
 }
 

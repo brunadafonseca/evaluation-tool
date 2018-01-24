@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import RaisedButton from 'material-ui/RaisedButton'
 
 export const batchShape = PropTypes.shape({
     _id: PropTypes.string.isRequired,
@@ -10,6 +11,10 @@ export const batchShape = PropTypes.shape({
     endDate: PropTypes.instanceOf(Date).isRequired,
     students: PropTypes.array.isRequired
 })
+
+const style = {
+  margin: 12,
+}
 
 class BatchItem extends PureComponent {
   static propTypes = {
@@ -23,11 +28,11 @@ class BatchItem extends PureComponent {
     return (
         <div className="batch">
           <p>Batch #{ number }</p>
-          <p>Start date: { startDate }</p>
-          <p>End date: { endDate }</p>
+          <p>Start date: { startDate && startDate.slice(0, 10) }</p>
+          <p>End date: { endDate && endDate.slice(0, 10) }</p>
 
         <Link to={ `/batches/${_id}` }>
-          <button>View this batch</button>
+          <RaisedButton label="View Batch" secondary={true} style={style} />
         </Link>
       </div>
     )

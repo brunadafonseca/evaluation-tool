@@ -21,13 +21,13 @@ class BatchesContainer extends PureComponent {
   render() {
     return (
       <div className="BatchesContainer">
-        <h1>List of batches</h1>
         <CreateBatchForm createBatch={this.props.createBatch}/>
-        <Paper className="paper">
-          <Menu>
-            {this.props.batches.map(batch => <BatchItem { ...batch } />)}
-          </Menu>
-        </Paper>
+        <div className="batches">
+          <h1>List of batches</h1>
+          <div className="batches-grid">
+            {this.props.batches.map(batch => <Paper className="paper"><BatchItem { ...batch } /></Paper>)}
+          </div>
+        </div>
       </div>
     )
   }

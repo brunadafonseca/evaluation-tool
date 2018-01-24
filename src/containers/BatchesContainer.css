@@ -5,7 +5,25 @@
 }
 
 .BatchesContainer .paper {
-  margin-top: 40px;
-  padding: 10px;
-  text-align: left;
+  padding: 30px;
+  text-align: center;
+  margin: 20px;
+}
+
+.batches-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.batches h1 {
+  text-align: center;
+  font-size: 1.5em;
+  border-bottom: 1px solid #000;
+  padding-bottom: 10px;
+}
+
+.batches {
+  margin-top: 50px;
 }
