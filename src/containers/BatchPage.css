@@ -2,3 +2,11 @@
   margin: 0 auto;
   text-align: center;
 }
+
+.random-question-btn {
+  margin: 30px;
+}
+
+.green, .orange, .red {
+  margin: 10px;
+}

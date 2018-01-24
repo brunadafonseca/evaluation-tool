@@ -8,7 +8,8 @@ import {
 
 export const FETCHED_BATCHES = 'FETCHED_BATCHES'
 export const FETCHED_ONE_BATCH = 'FETCHED_ONE_BATCH'
-export const FETCHED_STUDENTS = 'BATCH_UPDATED'
+export const FETCHED_ONE_STUDENT = 'FETCHED_ONE_STUDENT'
+export const FETCHED_STUDENTS = 'FETCHED_STUDENTS'
 
 const api = new API()
 
@@ -70,6 +71,24 @@ export const fetchBatchById = (batchId) => {
       .then((result) => {
         console.log(result)
         dispatch({ type: FETCHED_ONE_BATCH, payload: result.body })
+        dispatch({ type: APP_DONE_LOADING })
+      })
+      .catch((error) => {
+        dispatch({ type: APP_DONE_LOADING })
+        dispatch({ type: LOAD_ERROR, payload: error.message })
+      })
+  }
+}
+
+export const fetchStudentById = (studentId) => {
+  return dispatch => {
+    const path = `/students/${studentId}`
+    dispatch({ type: APP_LOADING })
+
+    api.get(path)
+      .then((result) => {
+        console.log(result)
+        dispatch({ type: FETCHED_ONE_STUDENT, payload: result.body })
         dispatch({ type: APP_DONE_LOADING })
       })
       .catch((error) => {

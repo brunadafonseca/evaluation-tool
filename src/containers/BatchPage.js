@@ -9,6 +9,8 @@ import Student from './Student'
 import { batchShape } from './BatchItem'
 import './BatchPage.css'
 import { Link } from 'react-router-dom'
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 export class BatchPage extends PureComponent {
   state = {
@@ -24,12 +26,21 @@ export class BatchPage extends PureComponent {
     this.props.fetchBatchById(this.props.match.params.batchId)
   }
 
+  handleSubmit = () => {
+
+  }
+
   render() {
     const { _id, number, startDate, endDate } = this.props
     console.log(this.props.students)
 
     return (
       <div className="batch-container">
+        <div className="random-question-btn">
+          <FloatingActionButton secondary={true} onClic={this.handleSubmit}>
+              <ContentAdd />
+          </FloatingActionButton>
+        </div>
         <div className="batch">
           <p>Batch #{ number }</p>
           <p>Start date: { startDate }</p>
@@ -39,7 +50,7 @@ export class BatchPage extends PureComponent {
           <AddStudentForm batchId={_id} addStudent={this.props.addStudent} />
         </div>
         <div className="students-list">
-          {this.props.students && this.props.students.map(student => <Link to={`/students/${student._id}`}><Student  { ...student } /></Link>)}
+          {this.props.students && this.props.students.map(student => <Student  { ...student } /> )}
         </div>
       </div>
     )

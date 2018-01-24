@@ -7,5 +7,5 @@ export default {
   loading,
   loadError,
   currentUser,
-  batches
+  batches,
 }
