@@ -76,8 +76,7 @@ export class CreateBatchForm extends PureComponent {
   render() {
     return (
       <Paper style={ dialogStyle }>
-        <Title content="Add a new Batch" level={2} />
-
+        <h2>Add a new batch</h2>
         <form onSubmit={this.submitForm.bind(this)}>
           <div className="input">
             <TextField ref="number" type="text" hintText="Batch number: "
