@@ -5,6 +5,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ActionThumbUp from 'material-ui/svg-icons/action/thumb-up'
 import ActionThumbDown from 'material-ui/svg-icons/action/thumb-down'
 import ActionThumbsUpDown from 'material-ui/svg-icons/action/thumbs-up-down'
+import { updateEvaluation } from '../actions/batches/add-student'
 
 import './Student.css'
 
@@ -17,10 +18,12 @@ class Student extends PureComponent {
       day: day,
       color: color
     }
-    const evaluations = this.props.evaluations
+    const batchId = this.props.batches[0]._id
+    const studentId = this.props._id
+    const student = this.props
+    const updatedStudent = {...student, evaluations: [...student, newEvaluation] }
 
-    const updated = evaluations.concat(newEvaluation)
-    console.log(updated)
+    this.props.updateEvaluation(batchId, updatedStudent )
   }
 
   render() {
@@ -59,4 +62,4 @@ class Student extends PureComponent {
 
 const mapStateToProps = ({ batches }) => ({ batches })
 
-export default connect(mapStateToProps)(Student)
+export default connect(mapStateToProps, { updateEvaluation })(Student)

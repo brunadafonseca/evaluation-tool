@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { fetchBatchById } from '../actions/batches/fetch'
 import { AddStudentForm } from './AddStudentForm'
-import addStudent from '../actions/batches/add-student'
+import addStudent, { updateEvaluation } from '../actions/batches/add-student'
 import fetchStudents from '../actions/batches/fetch'
 import Student from './Student'
 import { batchShape } from './BatchItem'
@@ -50,7 +50,7 @@ export class BatchPage extends PureComponent {
           <AddStudentForm batchId={_id} addStudent={this.props.addStudent} />
         </div>
         <div className="students-list">
-          {this.props.students && this.props.students.map(student => <Student  { ...student } /> )}
+          {this.props.students && this.props.students.map(student => <Student updateEvaluation={this.props.updateEvaluation} { ...student } /> )}
         </div>
       </div>
     )
@@ -70,4 +70,4 @@ const mapStateToProps = ({ batches }, { match }) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchBatchById, addStudent, fetchStudents })(BatchPage)
+export default connect(mapStateToProps, { fetchBatchById, addStudent, fetchStudents, updateEvaluation })(BatchPage)
