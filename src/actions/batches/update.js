@@ -30,20 +30,22 @@ export default (batchId, updates = {}) => {
   }
 }
 
-export const updateEvaluation = (batchId, student) => {
-  return dispatch => {
-    const path = `/batches/${batchId}/students`
+export const updateEvaluation = (batchId, updates = {}) => {
+  return (dispatch) => {
     dispatch({ type: APP_LOADING })
 
-    api.patch(path, { ...student })
+    api.patch(`/batches/${batchId}/students`, updates)
       .then((result) => {
-        console.log(result)
-        dispatch({ type: BATCH_UPDATED, payload: result.body })
         dispatch({ type: APP_DONE_LOADING })
+        dispatch({ type: LOAD_SUCCESS })
+        dispatch({ type: BATCH_UPDATED, payload: result.body })
       })
       .catch((error) => {
         dispatch({ type: APP_DONE_LOADING })
-        dispatch({ type: LOAD_ERROR, payload: error.message })
+        dispatch({
+          type: LOAD_ERROR,
+          payload: error.message
+        })
       })
   }
 }

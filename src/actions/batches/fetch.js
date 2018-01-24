@@ -69,7 +69,7 @@ export const fetchBatchById = (batchId) => {
 
     api.get(path)
       .then((result) => {
-        console.log(result)
+
         dispatch({ type: FETCHED_ONE_BATCH, payload: result.body })
         dispatch({ type: APP_DONE_LOADING })
       })
@@ -80,14 +80,14 @@ export const fetchBatchById = (batchId) => {
   }
 }
 
-export const fetchStudentById = (studentId) => {
+export const fetchStudentById = (batchId, student_id) => {
   return dispatch => {
-    const path = `/students/${studentId}`
+    const path = `/batches/${batchId}/students/${student_id}`
     dispatch({ type: APP_LOADING })
 
     api.get(path)
       .then((result) => {
-        console.log(result)
+
         dispatch({ type: FETCHED_ONE_STUDENT, payload: result.body })
         dispatch({ type: APP_DONE_LOADING })
       })

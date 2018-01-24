@@ -22,9 +22,8 @@ class BatchItem extends PureComponent {
   }
 
   render() {
-    console.log(this.props)
-
     const { _id, number, startDate, endDate } = this.props
+    
     return (
         <div className="batch">
           <p>Batch #{ number }</p>

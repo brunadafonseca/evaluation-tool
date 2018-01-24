@@ -10,3 +10,27 @@
 .green, .orange, .red {
   margin: 10px;
 }
+
+.batch-performance {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.green-bar, .orange-bar, .red-bar {
+  width: 30%;
+  height: 40px;
+}
+
+.green-bar {
+  background-color: #00B749;
+}
+
+.orange-bar {
+  background-color: #FFBA08;
+}
+
+.red-bar {
+  background-color: #D00000;
+}

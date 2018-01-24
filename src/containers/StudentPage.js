@@ -5,10 +5,22 @@ import { fetchStudentById } from '../actions/batches/fetch'
 
 export class StudentPage extends PureComponent {
 
+  componentWillMount() {
+    console.log(this.props)
+    const batchId = (this.props.match.params.batchId)
+    const studentId = (this.props.match.params.studentId)
+
+    this.props.fetchStudentById(batchId, studentId)
+    console.log(this.props)
+  }
+
   render() {
-    const { name, photo } = this.props
+    console.log(this.props)
+
+    const { name, photo } = this.props.student
     return (
         <div className="student">
+          <h1>Hello world</h1>
           <p>{name}</p>
           <img src={photo} />
       </div>
@@ -16,6 +28,6 @@ export class StudentPage extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ batches }) => ({ batches })
+const mapStateToProps = ({ student }) => ({ student })
 
 export default connect(mapStateToProps, { fetchStudentById })(StudentPage)
