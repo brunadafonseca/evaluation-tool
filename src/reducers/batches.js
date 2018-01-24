@@ -1,6 +1,6 @@
 import { FETCHED_BATCHES, FETCHED_ONE_BATCH, FETCHED_ONE_STUDENT } from '../actions/batches/fetch'
 import { BATCH_CREATED } from '../actions/batches/create'
-import { BATCH_UPDATED } from '../actions/batches/add-student'
+import { BATCH_UPDATED } from '../actions/batches/update'
 
 export default (state = [], { type, payload } = {}) => {
   switch (type) {

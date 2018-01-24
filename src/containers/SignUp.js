@@ -27,11 +27,6 @@ export class SignUp extends PureComponent {
     signUp: PropTypes.func.isRequired,
   }
 
-  constructor(props) {
-    super(props);
-    this.createBatch = this.createBatch.bind(this);
-  }
-
   state = {}
 
   submitForm(event) {

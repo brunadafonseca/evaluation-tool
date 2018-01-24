@@ -5,7 +5,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ActionThumbUp from 'material-ui/svg-icons/action/thumb-up'
 import ActionThumbDown from 'material-ui/svg-icons/action/thumb-down'
 import ActionThumbsUpDown from 'material-ui/svg-icons/action/thumbs-up-down'
-import { updateEvaluation } from '../actions/batches/add-student'
+import { updateEvaluation } from '../actions/batches/update'
 
 import './Student.css'
 
