@@ -2,28 +2,60 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { fetchBatchById } from '../actions/batches/fetch'
+import { AddStudentForm } from './AddStudentForm'
+import addStudent from '../actions/batches/add-student'
+import fetchStudents from '../actions/batches/fetch'
+import Student from './Student'
+import { batchShape } from './BatchItem'
 
 export class BatchPage extends PureComponent {
+  state = {
+    students: []
+  }
+  static propTypes = {
+    ...batchShape,
+    addStudent: PropTypes.func.isRequired,
+    fetchBatchById: PropTypes.func.isRequired
+  }
+
   componentWillMount() {
     this.props.fetchBatchById(this.props.match.params.batchId)
   }
 
   render() {
-    const { _id, number, startDate, endDate, students } = this.props.batches
-    console.log(startDate)
+    const { _id, number, startDate, endDate } = this.props
+    console.log(this.state.students)
+    console.log(this.props.number)
+
     return (
-      <div className="batch">
-        <p>Batch #{ number }</p>
-        <p>Start date: { startDate }</p>
-        <p>End date: { endDate }</p>
-        <ul>List of students
-          <li>{students}</li>
-        </ul>
+      <div className="batch-container">
+        <div className="batch">
+          <p>Batch #{ number }</p>
+          <p>Start date: { startDate }</p>
+          <p>End date: { endDate }</p>
+        </div>
+        <div className="add-student">
+          <AddStudentForm batchId={_id} addStudent={this.props.addStudent} />
+        </div>
+        <div className="students-list">
+          {this.props.students && this.props.students.map(student => <Student  { ...student } />)}
+        </div>
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ batches }) => ({ batches })
+const mapStateToProps = ({ batches }, { match }) => {
+  const batch = batches.reduce((prev, next) => {
+    if (next._id === match.params.batchId) {
+      return next
+    }
+    return prev
+  }, {})
 
-export default connect(mapStateToProps, { fetchBatchById })(BatchPage)
+  return {
+    ...batch
+  }
+}
+
+export default connect(mapStateToProps, { fetchBatchById, addStudent, fetchStudents })(BatchPage)
