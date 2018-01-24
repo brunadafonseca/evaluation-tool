@@ -8,6 +8,7 @@ import fetchStudents from '../actions/batches/fetch'
 import Student from './Student'
 import { batchShape } from './BatchItem'
 import './BatchPage.css'
+import { Link } from 'react-router-dom'
 
 export class BatchPage extends PureComponent {
   state = {
@@ -25,6 +26,7 @@ export class BatchPage extends PureComponent {
 
   render() {
     const { _id, number, startDate, endDate } = this.props
+    console.log(this.props.students)
 
     return (
       <div className="batch-container">
@@ -37,7 +39,7 @@ export class BatchPage extends PureComponent {
           <AddStudentForm batchId={_id} addStudent={this.props.addStudent} />
         </div>
         <div className="students-list">
-          {this.props.students && this.props.students.map(student => <Student  { ...student } />)}
+          {this.props.students && this.props.students.map(student => <Link to={`/students/${student._id}`}><Student  { ...student } /></Link>)}
         </div>
       </div>
     )
