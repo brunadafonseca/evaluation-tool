@@ -43,7 +43,7 @@ export class BatchPage extends PureComponent {
 
     return (
       <div className="batch-container">
-        <div className="batch">
+        <div className="batch-page">
           <h1>Batch #{ number }</h1>
           <div class="batch-dates">
             <p>Start date: { startDate && startDate.slice(0, 10) }</p>
@@ -59,7 +59,7 @@ export class BatchPage extends PureComponent {
           <AddStudentForm batchId={_id} addStudent={this.props.addStudent} />
         </div>
         <div className="random-question-btn">
-          <FloatingActionButton secondary={true} onClic={this.handleSubmit}>
+          <FloatingActionButton secondary={true} onClick={this.handleSubmit}>
               <ContentAdd />
           </FloatingActionButton>
         </div>
