@@ -29,3 +29,21 @@ export default (batchId, updates = {}) => {
       })
   }
 }
+
+export const updateEvaluation = (batchId, student) => {
+  return dispatch => {
+    const path = `/batches/${batchId}/students`
+    dispatch({ type: APP_LOADING })
+
+    api.patch(path, { ...student })
+      .then((result) => {
+        console.log(result)
+        dispatch({ type: BATCH_UPDATED, payload: result.body })
+        dispatch({ type: APP_DONE_LOADING })
+      })
+      .catch((error) => {
+        dispatch({ type: APP_DONE_LOADING })
+        dispatch({ type: LOAD_ERROR, payload: error.message })
+      })
+  }
+}

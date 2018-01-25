@@ -5,7 +5,7 @@ import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
-import addStudent from '../actions/batches/add-student'
+import addStudent from '../actions/batches/update'
 import Title from '../components/UI/Title'
 
 const dialogStyle = {
