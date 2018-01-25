@@ -34,3 +34,18 @@
 .red-bar {
   background-color: #D00000;
 }
+
+.batch {
+  max-width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.batch-dates {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-end;
+}

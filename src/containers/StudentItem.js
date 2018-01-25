@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 
 import './Student.css'
 
-class Student extends PureComponent {
+class StudentItem extends PureComponent {
 
   handleClick = (e) => {
     const color = e.currentTarget.getAttribute('data-id')
@@ -68,4 +68,4 @@ class Student extends PureComponent {
 
 const mapStateToProps = ({ batches }) => ({ batches })
 
-export default connect(mapStateToProps, { updateEvaluation })(Student)
+export default connect(mapStateToProps, { updateEvaluation })(StudentItem)

@@ -5,7 +5,7 @@ import { fetchBatchById } from '../actions/batches/fetch'
 import { AddStudentForm } from './AddStudentForm'
 import addStudent, { updateEvaluation } from '../actions/batches/update'
 import fetchStudents from '../actions/batches/fetch'
-import Student from './Student'
+import StudentItem from './StudentItem'
 import { batchShape } from './BatchItem'
 import './BatchPage.css'
 import { Link } from 'react-router-dom'
@@ -44,9 +44,11 @@ export class BatchPage extends PureComponent {
     return (
       <div className="batch-container">
         <div className="batch">
-          <p>Batch #{ number }</p>
-          <p>Start date: { startDate && startDate.slice(0, 10) }</p>
-          <p>End date: { endDate && endDate.slice(0, 10) }</p>
+          <h1>Batch #{ number }</h1>
+          <div class="batch-dates">
+            <p>Start date: { startDate && startDate.slice(0, 10) }</p>
+            <p>End date: { endDate && endDate.slice(0, 10) }</p>
+          </div>
         </div>
         <div className="batch-performance">
           <div className="green-bar"></div>
@@ -62,7 +64,7 @@ export class BatchPage extends PureComponent {
           </FloatingActionButton>
         </div>
         <div className="students-list">
-          {this.props.students && this.props.students.map(student => <Student updateEvaluation={this.props.updateEvaluation} { ...student } /> )}
+          {this.props.students && this.props.students.map(student => <StudentItem updateEvaluation={this.props.updateEvaluation} { ...student } /> )}
         </div>
       </div>
     )

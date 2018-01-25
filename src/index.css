@@ -3,6 +3,10 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  font-family: 'Nunito', 'Roboto', Helvetica, Arial, sans-serif;
   background-color: #f6f6f6;
+}
+
+#root > div > div:nth-child(1) > h1 {
+  font-family: 'Nunito' !important;
 }

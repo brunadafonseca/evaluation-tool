@@ -8,6 +8,7 @@ import FlatButton from 'material-ui/FlatButton'
 import createBatch from '../actions/batches/create'
 import Title from '../components/UI/Title'
 import DatePicker from 'material-ui/DatePicker'
+import './CreateBatchForm.css'
 
 const dialogStyle = {
   width: '400px',
@@ -41,6 +42,7 @@ export class CreateBatchForm extends PureComponent {
         endDate: this.state.endDate
       }
       this.props.createBatch(batch)
+      this.props.handleClose()
     }
     return false
   }
@@ -74,38 +76,44 @@ export class CreateBatchForm extends PureComponent {
   }
 
   render() {
+    const actions = [
+        <FlatButton
+          label="Cancel"
+          primary={true}
+          onClick={this.handleClose}
+        />
+      ]
+
     return (
-      <Paper style={ dialogStyle }>
-        <h2>Add a new batch</h2>
-        <form onSubmit={this.submitForm.bind(this)}>
-          <div className="input">
-            <TextField ref="number" type="text" hintText="Batch number: "
-              onChange={this.validateNumber.bind(this)}
-              errorText={ this.state.numberError} />
-          </div>
-          <div style={optionsStyle}>
-            <DatePicker
-              onChange={this.handleChangeMinDate}
-              autoOk={true}
-              floatingLabelText="Start Date"
-              disableYearSelection={false}
-              mode="landscape"
-            />
-            <DatePicker
-              onChange={this.handleChangeMaxDate}
-              autoOk={true}
-              floatingLabelText="End Date"
-              disableYearSelection={false}
-              mode="landscape"
-            />
-          </div>
-        </form>
-        <RaisedButton
-          style={ buttonStyle }
-          onClick={ this.submitForm.bind(this) }
-          label="Create new batch"
-          primary={true} />
-      </Paper>
+        <div>
+          <form onSubmit={this.submitForm.bind(this)}>
+            <div className="input">
+              <TextField ref="number" type="text" hintText="Batch number: "
+                onChange={this.validateNumber.bind(this)}
+                errorText={ this.state.numberError} />
+                <div style={optionsStyle}>
+                  <DatePicker
+                    onChange={this.handleChangeMinDate}
+                    autoOk={true}
+                    floatingLabelText="Start Date"
+                    disableYearSelection={false}
+                    mode="landscape"
+                  />
+                  <DatePicker
+                    onChange={this.handleChangeMaxDate}
+                    autoOk={true}
+                    floatingLabelText="End Date"
+                    disableYearSelection={false}
+                    mode="landscape"
+                  />
+                </div>
+            </div>
+          </form>
+          <RaisedButton
+            onClick={ this.submitForm.bind(this) }
+            label="Submit"
+            primary={true} />
+        </div>
     )
   }
 }
