@@ -8,6 +8,7 @@ import {
 
 export const BATCH_UPDATED = 'BATCH_UPDATED'
 export const STUDENT_UPDATED = 'STUDENT_UPDATED'
+export const UPDATED_BATCH_PERFORMANCE = 'UPDATED_BATCH_PERFORMANCE'
 
 const api = new API()
 
@@ -48,5 +49,14 @@ export const updateEvaluation = (batchId, studentId, updates = {}) => {
           payload: error.message
         })
       })
+  }
+}
+
+export const updateBatchPerformance = (batchPerformance) => {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATED_BATCH_PERFORMANCE,
+      payload: batchPerformance
+    })
   }
 }

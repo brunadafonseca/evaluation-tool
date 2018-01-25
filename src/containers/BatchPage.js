@@ -3,14 +3,14 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { fetchBatchById } from '../actions/batches/fetch'
 import { AddStudentForm } from './AddStudentForm'
-import addStudent, { updateEvaluation } from '../actions/batches/update'
+import addStudent, { updateEvaluation, updateBatchPerformance } from '../actions/batches/update'
 import fetchStudents from '../actions/batches/fetch'
 import StudentItem from './StudentItem'
 import { batchShape } from './BatchItem'
 import './BatchPage.css'
 import { Link } from 'react-router-dom'
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import ContentAdd from 'material-ui/svg-icons/content/add'
 
 export class BatchPage extends PureComponent {
   static propTypes = {
@@ -23,23 +23,47 @@ export class BatchPage extends PureComponent {
     this.props.fetchBatchById(this.props.match.params.batchId)
   }
 
-  handleSubmit = () => {
+  componentWillReceiveProps() {
+    const { students } = this.props
+    const batchId = this.props.match.params.batchId
 
+    const redStudents = (students && students.filter(student => {
+      return student.evaluations[student.evaluations.length-1] && student.evaluations[student.evaluations.length-1].color === 'red'
+    }))
+
+    const greenStudents = (students && students.filter(student => {
+      return student.evaluations[student.evaluations.length-1] && student.evaluations[student.evaluations.length-1].color === 'green'
+    }))
+
+    const orangeStudents = (students && students.filter(student => {
+      return student.evaluations[student.evaluations.length-1] && student.evaluations[student.evaluations.length-1].color === 'orange'
+    }))
+
+    const redPercentage = this.colorsPercentages(redStudents)
+    const orangePercentage = this.colorsPercentages(orangeStudents)
+    const greenPercentage = this.colorsPercentages(greenStudents)
+
+    const batchPerformance = {
+      id: batchId,
+      batchPerformance: {
+        green: greenPercentage,
+        orange: orangePercentage,
+        red: redPercentage
+      }
+    }
+
+    this.props.updateBatchPerformance(batchPerformance)
   }
 
-  // batchPerformance() {
-  //   const students = this.props
-  //   const green = "green"
-  //   const orange = "orange"
-  //   const red = "red"
-  //    return students.filter(function() {
-  //     return students.evaluations[0].color === green
-  //     push... to blabla class=green
-  //   })
-  // }
+  colorsPercentages(studentsArray) {
+    let percentage = 0
+    const totalStudents = this.props.students && this.props.students.length
+    return percentage = (studentsArray && studentsArray.length / totalStudents) * 100
+  }
 
   render() {
-    const { _id, number, startDate, endDate, students } = this.props
+    console.log(this.props)
+    const { _id, number, startDate, endDate, students, batchPerformance } = this.props
 
     return (
       <div className="batch-container">
@@ -50,11 +74,6 @@ export class BatchPage extends PureComponent {
             <p>End date: { endDate && endDate.slice(0, 10) }</p>
           </div>
         </div>
-        <div className="batch-performance">
-          <div className="green-bar"></div>
-          <div className="orange-bar"></div>
-          <div className="red-bar"></div>
-        </div>
         <div className="add-student">
           <AddStudentForm batchId={_id} addStudent={this.props.addStudent} />
         </div>
@@ -62,6 +81,11 @@ export class BatchPage extends PureComponent {
           <FloatingActionButton secondary={true} onClick={this.handleSubmit}>
               <ContentAdd />
           </FloatingActionButton>
+        </div>
+        <div className="batch-performance">
+          <div className="green-bar"><p>{ batchPerformance && batchPerformance.green }</p></div>
+          <div className="orange-bar"></div>
+          <div className="red-bar"></div>
         </div>
         <div className="students-list">
           {this.props.students && this.props.students.map(student => <StudentItem updateEvaluation={this.props.updateEvaluation} { ...student } /> )}
@@ -84,4 +108,4 @@ const mapStateToProps = ({ batches }, { match }) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchBatchById, addStudent, fetchStudents, updateEvaluation })(BatchPage)
+export default connect(mapStateToProps, { fetchBatchById, addStudent, fetchStudents, updateEvaluation, updateBatchPerformance })(BatchPage)
