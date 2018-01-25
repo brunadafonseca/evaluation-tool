@@ -6,10 +6,11 @@ import ActionThumbUp from 'material-ui/svg-icons/action/thumb-up'
 import ActionThumbDown from 'material-ui/svg-icons/action/thumb-down'
 import ActionThumbsUpDown from 'material-ui/svg-icons/action/thumbs-up-down'
 import { updateEvaluation } from '../actions/batches/update'
+import { Link } from 'react-router-dom'
 
 import './Student.css'
 
-class Student extends PureComponent {
+class StudentItem extends PureComponent {
 
   handleClick = (e) => {
     const color = e.currentTarget.getAttribute('data-id')
@@ -21,17 +22,22 @@ class Student extends PureComponent {
     const batchId = this.props.batches[0]._id
     const studentId = this.props._id
     const student = this.props
-    const updatedStudent = {...student, evaluations: [...student, newEvaluation] }
+    const updatedStudent = {...student, evaluations: [newEvaluation] }
 
-    this.props.updateEvaluation(batchId, updatedStudent )
+    this.props.updateEvaluation(batchId, {updatedStudent} )
   }
 
   render() {
-    const { name, photo } = this.props
+    console.log(this.props)
+    const { name, photo, _id, batches } = this.props
+    const batchId = batches[0]._id
+
     return (
         <div className="student">
-          <p>{name}</p>
-          <img src={photo} />
+          <Link to={ `/batches/${batchId}/students/${_id}` }>
+            <p>{name}</p>
+            <img src={photo} />
+          </Link>
           <div className="evaluation-btns">
             <FloatingActionButton
               data-id="green"
@@ -62,4 +68,4 @@ class Student extends PureComponent {
 
 const mapStateToProps = ({ batches }) => ({ batches })
 
-export default connect(mapStateToProps, { updateEvaluation })(Student)
+export default connect(mapStateToProps, { updateEvaluation })(StudentItem)

@@ -7,6 +7,7 @@ import {
 } from '../loading'
 
 export const BATCH_UPDATED = 'BATCH_UPDATED'
+export const STUDENT_UPDATED = 'STUDENT_UPDATED'
 
 const api = new API()
 
@@ -30,20 +31,22 @@ export default (batchId, updates = {}) => {
   }
 }
 
-export const updateEvaluation = (batchId, student) => {
-  return dispatch => {
-    const path = `/batches/${batchId}/students`
+export const updateEvaluation = (batchId, studentId, updates = {}) => {
+  return (dispatch) => {
     dispatch({ type: APP_LOADING })
 
-    api.patch(path, { ...student })
+    api.patch(`/batches/${batchId}/students/${studentId}`, updates)
       .then((result) => {
-        console.log(result)
-        dispatch({ type: BATCH_UPDATED, payload: result.body })
         dispatch({ type: APP_DONE_LOADING })
+        dispatch({ type: LOAD_SUCCESS })
+        dispatch({ type: STUDENT_UPDATED, payload: result.body })
       })
       .catch((error) => {
         dispatch({ type: APP_DONE_LOADING })
-        dispatch({ type: LOAD_ERROR, payload: error.message })
+        dispatch({
+          type: LOAD_ERROR,
+          payload: error.message
+        })
       })
   }
 }

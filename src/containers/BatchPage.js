@@ -5,7 +5,7 @@ import { fetchBatchById } from '../actions/batches/fetch'
 import { AddStudentForm } from './AddStudentForm'
 import addStudent, { updateEvaluation } from '../actions/batches/update'
 import fetchStudents from '../actions/batches/fetch'
-import Student from './Student'
+import StudentItem from './StudentItem'
 import { batchShape } from './BatchItem'
 import './BatchPage.css'
 import { Link } from 'react-router-dom'
@@ -13,9 +13,6 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
 export class BatchPage extends PureComponent {
-  state = {
-    students: []
-  }
   static propTypes = {
     ...batchShape,
     addStudent: PropTypes.func.isRequired,
@@ -30,27 +27,44 @@ export class BatchPage extends PureComponent {
 
   }
 
+  // batchPerformance() {
+  //   const students = this.props
+  //   const green = "green"
+  //   const orange = "orange"
+  //   const red = "red"
+  //    return students.filter(function() {
+  //     return students.evaluations[0].color === green
+  //     push... to blabla class=green
+  //   })
+  // }
+
   render() {
-    const { _id, number, startDate, endDate } = this.props
-    console.log(this.props.students)
+    const { _id, number, startDate, endDate, students } = this.props
 
     return (
       <div className="batch-container">
-        <div className="random-question-btn">
-          <FloatingActionButton secondary={true} onClic={this.handleSubmit}>
-              <ContentAdd />
-          </FloatingActionButton>
+        <div className="batch-page">
+          <h1>Batch #{ number }</h1>
+          <div class="batch-dates">
+            <p>Start date: { startDate && startDate.slice(0, 10) }</p>
+            <p>End date: { endDate && endDate.slice(0, 10) }</p>
+          </div>
         </div>
-        <div className="batch">
-          <p>Batch #{ number }</p>
-          <p>Start date: { startDate }</p>
-          <p>End date: { endDate }</p>
+        <div className="batch-performance">
+          <div className="green-bar"></div>
+          <div className="orange-bar"></div>
+          <div className="red-bar"></div>
         </div>
         <div className="add-student">
           <AddStudentForm batchId={_id} addStudent={this.props.addStudent} />
         </div>
+        <div className="random-question-btn">
+          <FloatingActionButton secondary={true} onClick={this.handleSubmit}>
+              <ContentAdd />
+          </FloatingActionButton>
+        </div>
         <div className="students-list">
-          {this.props.students && this.props.students.map(student => <Student updateEvaluation={this.props.updateEvaluation} { ...student } /> )}
+          {this.props.students && this.props.students.map(student => <StudentItem updateEvaluation={this.props.updateEvaluation} { ...student } /> )}
         </div>
       </div>
     )

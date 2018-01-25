@@ -6,23 +6,16 @@ export default (state = [], { type, payload } = {}) => {
   switch (type) {
     case BATCH_CREATED:
       const newBatch = { ...payload }
-      console.log(newBatch)
       return [ newBatch ].concat(state)
 
     case FETCHED_BATCHES:
-      console.log(payload)
       return payload
 
-    case FETCHED_ONE_BATCH :
-      console.log([payload].concat(state))
+    case FETCHED_ONE_BATCH:
       return [payload].concat(state)
 
     case BATCH_UPDATED:
       return [{ ...state }].concat(payload)
-
-    case FETCHED_ONE_STUDENT :
-      console.log([payload].concat(state))
-      return [payload].concat(state)
 
     default :
       return state
