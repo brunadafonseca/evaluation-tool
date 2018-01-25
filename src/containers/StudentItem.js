@@ -41,21 +41,21 @@ class StudentItem extends PureComponent {
           <div className="evaluation-btns">
             <FloatingActionButton
               data-id="green"
-              className="green"
+              className="green-btn"
               onClick={this.handleClick.bind(this)}
               backgroundColor="#00B749">
               <ActionThumbUp />
             </FloatingActionButton>
             <FloatingActionButton
               data-id="orange"
-              className="orange"
+              className="orange-btn"
               onClick={this.handleClick.bind(this)}
               backgroundColor="#FFBA08">
               <ActionThumbsUpDown />
             </FloatingActionButton>
             <FloatingActionButton
               data-id="red"
-              className="red"
+              className="red-btn"
               onClick={this.handleClick.bind(this)}
               backgroundColor="#D00000">
               <ActionThumbDown />
