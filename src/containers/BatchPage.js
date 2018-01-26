@@ -21,11 +21,10 @@ export class BatchPage extends PureComponent {
     this.props.fetchBatchById(this.props.match.params.batchId)
   }
 
-  studentIndex = (max) => { Math.floor(Math.random() * Math.floor(max)) }
-
   pickStudent = () => {
   const randomNumber = Math.random()
-  console.log(this.getStudent(randomNumber))
+  const student = (this.getStudent(randomNumber))
+  alert(student.name)
   }
 
   getStudent = (randomNumber) => {
@@ -41,8 +40,6 @@ export class BatchPage extends PureComponent {
       return codeGreen[Math.floor(Math.random()*codeGreen.length)]
     }
   }
-
-
 
   addStudentsToArray = (arr, percentage) => {
     return arr.map((student) => {
