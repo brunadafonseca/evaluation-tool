@@ -69,7 +69,6 @@ export const fetchBatchById = (batchId) => {
 
     api.get(path)
       .then((result) => {
-
         dispatch({ type: FETCHED_ONE_BATCH, payload: result.body })
         dispatch({ type: APP_DONE_LOADING })
       })
@@ -80,9 +79,9 @@ export const fetchBatchById = (batchId) => {
   }
 }
 
-export const fetchStudentById = (batchId, student_id) => {
+export const fetchStudentById = (batchId, studentId) => {
   return dispatch => {
-    const path = `/batches/${batchId}/students/${student_id}`
+    const path = `/batches/${batchId}/students/${studentId}`
     dispatch({ type: APP_LOADING })
 
     api.get(path)

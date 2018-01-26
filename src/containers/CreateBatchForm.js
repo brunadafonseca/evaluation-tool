@@ -1,12 +1,10 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import createBatch from '../actions/batches/create'
-import Title from '../components/UI/Title'
 import DatePicker from 'material-ui/DatePicker'
 import './CreateBatchForm.css'
 

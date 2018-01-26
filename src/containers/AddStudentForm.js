@@ -4,8 +4,7 @@ import { connect } from 'react-redux'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
-import FlatButton from 'material-ui/FlatButton'
-import addStudent from '../actions/batches/update'
+import { addStudent } from '../actions/batches/update'
 import Title from '../components/UI/Title'
 
 const dialogStyle = {
@@ -33,7 +32,6 @@ export class AddStudentForm extends PureComponent {
       const student = {
           name: this.refs.name.getValue(),
           photo: this.refs.photo.getValue(),
-          batchId: batchId
       }
       this.props.addStudent(batchId, {student})
     }
