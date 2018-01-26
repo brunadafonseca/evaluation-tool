@@ -49,3 +49,10 @@
   flex-direction: column;
   align-content: flex-end;
 }
+
+.students-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}

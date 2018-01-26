@@ -1,6 +1,6 @@
 import { FETCHED_BATCHES, FETCHED_ONE_BATCH, FETCHED_ONE_STUDENT } from '../actions/batches/fetch'
 import { BATCH_CREATED } from '../actions/batches/create'
-import { BATCH_UPDATED } from '../actions/batches/update'
+import { BATCH_UPDATED, UPDATED_BATCH_PERFORMANCE } from '../actions/batches/update'
 
 export default (state = [], { type, payload } = {}) => {
   switch (type) {
@@ -16,6 +16,12 @@ export default (state = [], { type, payload } = {}) => {
 
     case BATCH_UPDATED:
       return [{ ...state }].concat(payload)
+
+    case UPDATED_BATCH_PERFORMANCE:
+      return state.map((batch) => {
+        if (batch._id !== payload.id) return batch
+        return { ...batch, batchPerformance: payload.batchPerformance }
+      })
 
     default :
       return state

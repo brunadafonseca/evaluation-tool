@@ -1,0 +1,59 @@
+textarea {
+  min-width: 300px;
+  min-height: 200px;
+  border: 0.5px solid #CCCCCC;
+  font-family: 'Nunito' !important;
+  font-size: 20px;
+}
+
+.green, .orange, .red {
+  width: 40px;
+  height: 40px;
+  margin: 0.07em;
+}
+
+.green, .green-btn {
+  background-color: #00B749;
+}
+
+.orange, .orange-btn {
+  background-color: #FFBA08;
+}
+
+.red, .red-btn {
+  background-color: #D00000;
+}
+
+.evaluation-history {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.student {
+  text-align: center;
+}
+
+.evaluation-btns > div {
+  margin: 10px;
+}
+
+.evaluation-btns {
+  display: flex;
+  flex-direction: column;
+  margin-right: 30px !important;
+}
+
+.evaluation-wrap {
+  display: flex;
+  flex-direction: row;
+  width: 70%;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+form {
+  margin-top: 30px;
+}
