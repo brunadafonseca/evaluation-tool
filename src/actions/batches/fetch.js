@@ -86,7 +86,6 @@ export const fetchStudentById = (batchId, studentId) => {
 
     api.get(path)
       .then((result) => {
-
         dispatch({ type: FETCHED_ONE_STUDENT, payload: result.body })
         dispatch({ type: APP_DONE_LOADING })
       })

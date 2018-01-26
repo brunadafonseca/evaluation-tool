@@ -41,18 +41,6 @@ export class BatchPage extends PureComponent {
     }
   }
 
-  addStudentsToArray = (arr, percentage) => {
-    return arr.map((student) => {
-      let newArray = []
-      let i = percentage
-      while (i > 0) {
-        newArray.push(student)
-        i--
-      }
-      return newArray
-    })
-  }
-
   componentWillUpdate() {
     const { students } = this.props
     if ( students &&
@@ -103,7 +91,7 @@ export class BatchPage extends PureComponent {
   }
 
   render() {
-    const { _id, number, startDate, endDate, batchPerformance } = this.props
+    const { number, startDate, endDate, batchPerformance } = this.props
 
     return (
       <div className="batch-container">

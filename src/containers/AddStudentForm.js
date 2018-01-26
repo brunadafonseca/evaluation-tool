@@ -29,11 +29,12 @@ export class AddStudentForm extends PureComponent {
     event.preventDefault()
     const batchId = this.props.batchId
     if (this.validateName() && this.validatePhoto()) {
-      const student = {
+      const newStudent = {
           name: this.refs.name.getValue(),
           photo: this.refs.photo.getValue(),
       }
-      this.props.addStudent(batchId, {student})
+      console.log(newStudent)
+      this.props.addStudent(batchId, newStudent)
     }
     return false
   }
