@@ -1,5 +1,6 @@
 import { FETCHED_BATCHES, FETCHED_ONE_BATCH, FETCHED_ONE_STUDENT } from '../actions/batches/fetch'
 import { BATCH_CREATED } from '../actions/batches/create'
+import { STUDENT_CREATED } from '../actions/students/create'
 import { BATCH_UPDATED, STUDENTS_UPDATED, UPDATED_BATCH_PERFORMANCE, BATCH_REMOVED, STUDENT_UPDATED } from '../actions/batches/update'
 
 
@@ -27,6 +28,7 @@ export default (state = [], { type, payload } = {}) => {
     case FETCHED_ONE_STUDENT:
       return { ...state, ...payload }
 
+    case STUDENT_CREATED:
     case BATCH_UPDATED:
       return state.map((batch) => {
         if (batch._id === payload._id) {

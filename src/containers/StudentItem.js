@@ -19,7 +19,7 @@ class StudentItem extends PureComponent {
           </div>
           <div className="info">
             <p>{name}</p>
-            <div className={ evaluations[evaluations.length-1] && evaluations[evaluations.length-1].color}></div>
+            <div className={ evaluations && evaluations[evaluations.length-1] && evaluations[evaluations.length-1].color}></div>
           </div>
         </div>
       </Link>

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
-import { addStudent } from '../actions/batches/update'
+import { createStudent } from '../actions/students/create'
 import Title from '../components/UI/Title'
 
 const dialogStyle = {
@@ -20,7 +20,7 @@ const buttonStyle = {
 
 export class AddStudentForm extends PureComponent {
   static propTypes = {
-    addStudent: PropTypes.func.isRequired,
+    createStudent: PropTypes.func.isRequired,
   }
 
   state = {}
@@ -34,7 +34,7 @@ export class AddStudentForm extends PureComponent {
           photo: this.refs.photo.getValue(),
       }
       console.log(newStudent)
-      this.props.addStudent(batchId, newStudent)
+      this.props.createStudent(batchId, newStudent)
     }
     return false
   }
@@ -98,4 +98,4 @@ export class AddStudentForm extends PureComponent {
   }
 }
 
-export default connect(null, { addStudent })(AddStudentForm)
+export default connect(null, { createStudent })(AddStudentForm)
