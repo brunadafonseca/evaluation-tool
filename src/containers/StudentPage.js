@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ActionThumbUp from 'material-ui/svg-icons/action/thumb-up'
@@ -57,13 +56,14 @@ export class StudentPage extends PureComponent {
   }
 
   render() {
-    const student = this.props.student
+    console.log(this.props)
+    const student = this.props.batches
 
     return (
       <div className="student-page">
         <div className="student">
           <h1>{ student && student.name }</h1>
-          <img src={ student && student.photo } />
+          <img src={ student && student.photo } alt=''/>
         </div>
         <div class="evaluation-history">
           { student.evaluations && student.evaluations.map(evaluation => <div className={evaluation.color}></div>) }
@@ -107,6 +107,6 @@ export class StudentPage extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ student }) => ({ student })
+const mapStateToProps = ({ batches }) => ({ batches })
 
 export default connect(mapStateToProps, { fetchStudentById, updateEvaluation })(StudentPage)

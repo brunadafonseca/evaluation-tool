@@ -1,27 +1,62 @@
 import { FETCHED_BATCHES, FETCHED_ONE_BATCH, FETCHED_ONE_STUDENT } from '../actions/batches/fetch'
 import { BATCH_CREATED } from '../actions/batches/create'
-import { BATCH_UPDATED, UPDATED_BATCH_PERFORMANCE } from '../actions/batches/update'
+import { BATCH_UPDATED, STUDENTS_UPDATED, UPDATED_BATCH_PERFORMANCE, BATCH_REMOVED, STUDENT_UPDATED } from '../actions/batches/update'
+
 
 export default (state = [], { type, payload } = {}) => {
   switch (type) {
-    case BATCH_CREATED:
+    case BATCH_CREATED :
       const newBatch = { ...payload }
-      return [ newBatch ].concat(state)
+      return [newBatch].concat(state)
 
     case FETCHED_BATCHES:
-      return payload
+      return [ ...payload ]
 
     case FETCHED_ONE_BATCH:
-      return [payload].concat(state)
+      const batchIds = state.map(b => b._id)
+      if (batchIds.indexOf(payload._id) < 0) {
+        return [{ ...payload }].concat(state)
+      }
+      return state.map((batch) => {
+        if (batch._id === payload._id) {
+          return { ...payload }
+        }
+        return batch
+      })
+
+    case FETCHED_ONE_STUDENT:
+      return payload
 
     case BATCH_UPDATED:
-      return [{ ...state }].concat(payload)
+      return state.map((batch) => {
+        if (batch._id === payload._id) {
+          return { ...payload }
+        }
+        return batch
+      })
+
+    case STUDENTS_UPDATED:
+      return state.map((batch) => {
+        if (batch._id === payload.batch._id) {
+          return { ...payload.batch, students: payload.students }
+        }
+        return batch
+      })
+
+    case STUDENT_UPDATED:
+    console.log(payload)
+      return state.map((batch) => {
+        if (batch._id === payload.batch._id) {
+          return { ...payload.batch, students: payload.students }
+          }
+          return batch
+        })
+
+    case BATCH_REMOVED:
+        return state.filter((batch) => (batch._id !== payload._id))
 
     case UPDATED_BATCH_PERFORMANCE:
-      return state.map((batch) => {
-        if (batch._id !== payload.id) return batch
-        return { ...batch, batchPerformance: payload.batchPerformance }
-      })
+      return { ...state, payload }
 
     default :
       return state

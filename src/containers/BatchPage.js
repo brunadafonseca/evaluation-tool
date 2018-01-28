@@ -3,14 +3,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { fetchBatchById } from '../actions/batches/fetch'
 import { AddStudentForm } from './AddStudentForm'
-import addStudent, { updateEvaluation, updateBatchPerformance } from '../actions/batches/update'
+import updateBatch, { addStudent, updateEvaluation, updateBatchPerformance } from '../actions/batches/update'
 import fetchStudents from '../actions/batches/fetch'
 import StudentItem from './StudentItem'
 import { batchShape } from './BatchItem'
 import './BatchPage.css'
-import { Link } from 'react-router-dom'
-import FloatingActionButton from 'material-ui/FloatingActionButton'
-import ContentAdd from 'material-ui/svg-icons/content/add'
+import RaisedButton from 'material-ui/RaisedButton'
 
 export class BatchPage extends PureComponent {
   static propTypes = {
@@ -23,69 +21,111 @@ export class BatchPage extends PureComponent {
     this.props.fetchBatchById(this.props.match.params.batchId)
   }
 
-  componentWillReceiveProps() {
+  studentIndex = (max) => { Math.floor(Math.random() * Math.floor(max)) }
+
+  pickStudent = () => {
+  const randomNumber = Math.random()
+  console.log(this.getStudent(randomNumber))
+  }
+
+  getStudent = (randomNumber) => {
+    const codeRed = this.props.batchPerformance.red
+    const codeGreen = this.props.batchPerformance.green
+    const codeOrange = this.props.batchPerformance.orange
+
+    if ( randomNumber <= 0.5 ) {
+      return codeRed[Math.floor(Math.random()*codeRed.length)]
+    } else if ( randomNumber > 0.5 && randomNumber <= 0.8 ) {
+      return codeOrange[Math.floor(Math.random()*codeOrange.length)]
+    } else {
+      return codeGreen[Math.floor(Math.random()*codeGreen.length)]
+    }
+  }
+
+
+
+  addStudentsToArray = (arr, percentage) => {
+    return arr.map((student) => {
+      let newArray = []
+      let i = percentage
+      while (i > 0) {
+        newArray.push(student)
+        i--
+      }
+      return newArray
+    })
+  }
+
+  componentWillUpdate() {
     const { students } = this.props
+    if ( students &&
+      students.evaluations &&
+      students.evaluations[students.evaluation.length-1] ) {
+      this.updateBatchPerformance()
+    }
+  }
+
+  checkClassProgress = () => {
     const batchId = this.props.match.params.batchId
+    const { students } = this.props
+    console.log(this.props)
 
     const redStudents = (students && students.filter(student => {
-      return student.evaluations[student.evaluations.length-1] && student.evaluations[student.evaluations.length-1].color === 'red'
-    }))
-
-    const greenStudents = (students && students.filter(student => {
-      return student.evaluations[student.evaluations.length-1] && student.evaluations[student.evaluations.length-1].color === 'green'
+      const evaluations = student.evaluations
+      const latestEvaluation = evaluations[evaluations.length-1]
+      return latestEvaluation && latestEvaluation.color === 'red'
     }))
 
     const orangeStudents = (students && students.filter(student => {
-      return student.evaluations[student.evaluations.length-1] && student.evaluations[student.evaluations.length-1].color === 'orange'
-    }))
+      const evaluations = student.evaluations
+      const latestEvaluation = evaluations[evaluations.length-1]
+      return latestEvaluation && latestEvaluation.color === 'orange'
+  }))
 
-    const redPercentage = this.colorsPercentages(redStudents)
-    const orangePercentage = this.colorsPercentages(orangeStudents)
-    const greenPercentage = this.colorsPercentages(greenStudents)
+    const greenStudents = (students && students.filter(student => {
+      const evaluations = student.evaluations
+      const latestEvaluation = evaluations[evaluations.length-1]
+      return latestEvaluation && latestEvaluation.color === 'green'
+    }))
 
     const batchPerformance = {
       id: batchId,
       batchPerformance: {
-        green: greenPercentage,
-        orange: orangePercentage,
-        red: redPercentage
+        green: greenStudents,
+        orange: orangeStudents,
+        red: redStudents
       }
     }
 
-    this.props.updateBatchPerformance(batchPerformance)
+    this.props.updateBatch(batchId, batchPerformance)
   }
 
-  colorsPercentages(studentsArray) {
-    let percentage = 0
-    const totalStudents = this.props.students && this.props.students.length
-    return percentage = (studentsArray && studentsArray.length / totalStudents) * 100
+  showPercentage(arr) {
+    const totalStudents = this.props.students.length
+    return (arr.length / totalStudents) * 100
   }
 
   render() {
-    console.log(this.props)
-    const { _id, number, startDate, endDate, students, batchPerformance } = this.props
+    const { _id, number, startDate, endDate, batchPerformance } = this.props
 
     return (
       <div className="batch-container">
         <div className="batch-page">
           <h1>Batch #{ number }</h1>
-          <div class="batch-dates">
+          <div className="batch-dates">
             <p>Start date: { startDate && startDate.slice(0, 10) }</p>
             <p>End date: { endDate && endDate.slice(0, 10) }</p>
           </div>
         </div>
+        <RaisedButton label="Check class progress" onClick={this.checkClassProgress} primary={true} />
+        <RaisedButton label="Random Student" onClick={this.pickStudent} primary={true} />
         <div className="add-student">
-          <AddStudentForm batchId={_id} addStudent={this.props.addStudent} />
-        </div>
-        <div className="random-question-btn">
-          <FloatingActionButton secondary={true} onClick={this.handleSubmit}>
-              <ContentAdd />
-          </FloatingActionButton>
+          <AddStudentForm batchId={this.props.match.params.batchId} addStudent={this.props.addStudent} />
         </div>
         <div className="batch-performance">
-          <div className="green-bar"><p>{ batchPerformance && batchPerformance.green }</p></div>
-          <div className="orange-bar"></div>
-          <div className="red-bar"></div>
+          <div className='green-bar'>{ (batchPerformance && this.showPercentage(batchPerformance.green)) || 0 }%</div>
+          <div className='orange-bar'>{ (batchPerformance && this.showPercentage(batchPerformance.orange)) || 0 }%</div>
+          <div className='red-bar'>{ (batchPerformance && this.showPercentage(batchPerformance.red)) || 0 }%</div>
         </div>
         <div className="students-list">
           {this.props.students && this.props.students.map(student => <StudentItem updateEvaluation={this.props.updateEvaluation} { ...student } /> )}
@@ -108,4 +148,4 @@ const mapStateToProps = ({ batches }, { match }) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchBatchById, addStudent, fetchStudents, updateEvaluation, updateBatchPerformance })(BatchPage)
+export default connect(mapStateToProps, { fetchBatchById, addStudent, fetchStudents, updateEvaluation, updateBatchPerformance, updateBatch })(BatchPage)
