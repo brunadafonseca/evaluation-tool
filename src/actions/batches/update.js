@@ -54,15 +54,15 @@ export const updateEvaluation = (batchId, studentId, updates = {}) => {
   }
 }
 
-export const addStudent = (batchId, updates = {}) => {
+export const addStudent = (batchId, newStudent = {}) => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
 
-    api.patch(`/batches/${batchId}/students`, updates)
+    api.post(`/batches/${batchId}/students`, newStudent)
       .then((result) => {
         dispatch({ type: APP_DONE_LOADING })
         dispatch({ type: LOAD_SUCCESS })
-        dispatch({ type: STUDENT_UPDATED, payload: result.body })
+        dispatch({ type: STUDENTS_UPDATED, payload: result.body })
       })
       .catch((error) => {
         dispatch({ type: APP_DONE_LOADING })

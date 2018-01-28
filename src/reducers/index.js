@@ -2,7 +2,7 @@ import loading from './loading'
 import loadError from './loadError'
 import currentUser from './currentUser'
 import batches from './batches'
-// import student from './student'
+// import students from './students'
 
 export default {
   loading,

@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { fetchBatchById } from '../actions/batches/fetch'
 import { AddStudentForm } from './AddStudentForm'
-import updateBatch, { addStudent, updateEvaluation, updateBatchPerformance } from '../actions/batches/update'
+import updateBatch, { updateEvaluation, updateBatchPerformance } from '../actions/batches/update'
+import { createStudent } from '../actions/students/create'
 import fetchStudents from '../actions/batches/fetch'
 import StudentItem from './StudentItem'
 import { batchShape } from './BatchItem'
@@ -13,7 +14,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 export class BatchPage extends PureComponent {
   static propTypes = {
     ...batchShape,
-    addStudent: PropTypes.func.isRequired,
+    createStudent: PropTypes.func.isRequired,
     fetchBatchById: PropTypes.func.isRequired
   }
 
@@ -21,11 +22,10 @@ export class BatchPage extends PureComponent {
     this.props.fetchBatchById(this.props.match.params.batchId)
   }
 
-  studentIndex = (max) => { Math.floor(Math.random() * Math.floor(max)) }
-
   pickStudent = () => {
   const randomNumber = Math.random()
-  console.log(this.getStudent(randomNumber))
+  const student = (this.getStudent(randomNumber))
+  alert(student.name)
   }
 
   getStudent = (randomNumber) => {
@@ -42,71 +42,19 @@ export class BatchPage extends PureComponent {
     }
   }
 
-
-
-  addStudentsToArray = (arr, percentage) => {
-    return arr.map((student) => {
-      let newArray = []
-      let i = percentage
-      while (i > 0) {
-        newArray.push(student)
-        i--
-      }
-      return newArray
-    })
-  }
-
-  componentWillUpdate() {
-    const { students } = this.props
-    if ( students &&
-      students.evaluations &&
-      students.evaluations[students.evaluation.length-1] ) {
-      this.updateBatchPerformance()
-    }
-  }
-
-  checkClassProgress = () => {
-    const batchId = this.props.match.params.batchId
-    const { students } = this.props
-    console.log(this.props)
-
-    const redStudents = (students && students.filter(student => {
-      const evaluations = student.evaluations
-      const latestEvaluation = evaluations[evaluations.length-1]
-      return latestEvaluation && latestEvaluation.color === 'red'
-    }))
-
-    const orangeStudents = (students && students.filter(student => {
-      const evaluations = student.evaluations
-      const latestEvaluation = evaluations[evaluations.length-1]
-      return latestEvaluation && latestEvaluation.color === 'orange'
-  }))
-
-    const greenStudents = (students && students.filter(student => {
-      const evaluations = student.evaluations
-      const latestEvaluation = evaluations[evaluations.length-1]
-      return latestEvaluation && latestEvaluation.color === 'green'
-    }))
-
-    const batchPerformance = {
-      id: batchId,
-      batchPerformance: {
-        green: greenStudents,
-        orange: orangeStudents,
-        red: redStudents
-      }
-    }
-
-    this.props.updateBatch(batchId, batchPerformance)
-  }
-
   showPercentage(arr) {
     const totalStudents = this.props.students.length
     return (arr.length / totalStudents) * 100
   }
 
+  renderStudents() {
+    const students = this.props.students
+    return students.map(student => <StudentItem updateEvaluation={this.props.updateEvaluation} {...student} /> )
+  }
+
   render() {
-    const { _id, number, startDate, endDate, batchPerformance } = this.props
+    console.log(this.props)
+    const { number, startDate, endDate, batchPerformance, students } = this.props
 
     return (
       <div className="batch-container">
@@ -120,7 +68,7 @@ export class BatchPage extends PureComponent {
         <RaisedButton label="Check class progress" onClick={this.checkClassProgress} primary={true} />
         <RaisedButton label="Random Student" onClick={this.pickStudent} primary={true} />
         <div className="add-student">
-          <AddStudentForm batchId={this.props.match.params.batchId} addStudent={this.props.addStudent} />
+          <AddStudentForm batchId={this.props.match.params.batchId} createStudent={this.props.createStudent} />
         </div>
         <div className="batch-performance">
           <div className='green-bar'>{ (batchPerformance && this.showPercentage(batchPerformance.green)) || 0 }%</div>
@@ -128,7 +76,7 @@ export class BatchPage extends PureComponent {
           <div className='red-bar'>{ (batchPerformance && this.showPercentage(batchPerformance.red)) || 0 }%</div>
         </div>
         <div className="students-list">
-          {this.props.students && this.props.students.map(student => <StudentItem updateEvaluation={this.props.updateEvaluation} { ...student } /> )}
+          {students && this.renderStudents()}
         </div>
       </div>
     )
@@ -148,4 +96,4 @@ const mapStateToProps = ({ batches }, { match }) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchBatchById, addStudent, fetchStudents, updateEvaluation, updateBatchPerformance, updateBatch })(BatchPage)
+export default connect(mapStateToProps, { fetchBatchById, createStudent, fetchStudents, updateEvaluation, updateBatchPerformance, updateBatch })(BatchPage)

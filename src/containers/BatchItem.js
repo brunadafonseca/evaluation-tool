@@ -10,7 +10,8 @@ export const batchShape = PropTypes.shape({
     number: PropTypes.number.isRequired,
     startDate: PropTypes.instanceOf(Date).isRequired,
     endDate: PropTypes.instanceOf(Date).isRequired,
-    students: PropTypes.array.isRequired
+    students: PropTypes.array.isRequired,
+    batchPerformance: PropTypes.array
 })
 
 const style = {

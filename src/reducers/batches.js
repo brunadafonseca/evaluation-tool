@@ -1,5 +1,6 @@
 import { FETCHED_BATCHES, FETCHED_ONE_BATCH, FETCHED_ONE_STUDENT } from '../actions/batches/fetch'
 import { BATCH_CREATED } from '../actions/batches/create'
+import { STUDENT_CREATED } from '../actions/students/create'
 import { BATCH_UPDATED, STUDENTS_UPDATED, UPDATED_BATCH_PERFORMANCE, BATCH_REMOVED, STUDENT_UPDATED } from '../actions/batches/update'
 
 
@@ -25,8 +26,9 @@ export default (state = [], { type, payload } = {}) => {
       })
 
     case FETCHED_ONE_STUDENT:
-      return payload
+      return { ...state, ...payload }
 
+    case STUDENT_CREATED:
     case BATCH_UPDATED:
       return state.map((batch) => {
         if (batch._id === payload._id) {
@@ -36,21 +38,10 @@ export default (state = [], { type, payload } = {}) => {
       })
 
     case STUDENTS_UPDATED:
-      return state.map((batch) => {
-        if (batch._id === payload.batch._id) {
-          return { ...payload.batch, students: payload.students }
-        }
-        return batch
-      })
+      return [{ ...state }].concat(payload)
 
     case STUDENT_UPDATED:
-    console.log(payload)
-      return state.map((batch) => {
-        if (batch._id === payload.batch._id) {
-          return { ...payload.batch, students: payload.students }
-          }
-          return batch
-        })
+      return { ...state, ...payload }
 
     case BATCH_REMOVED:
         return state.filter((batch) => (batch._id !== payload._id))
