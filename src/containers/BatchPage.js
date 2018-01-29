@@ -10,6 +10,9 @@ import StudentItem from './StudentItem'
 import { batchShape } from './BatchItem'
 import './BatchPage.css'
 import RaisedButton from 'material-ui/RaisedButton'
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentCreate from 'material-ui/svg-icons/content/create';
+import ActionDelete from 'material-ui/svg-icons/action/delete';
 
 export class BatchPage extends PureComponent {
   static propTypes = {
@@ -58,16 +61,31 @@ export class BatchPage extends PureComponent {
 
     return (
       <div className="batch-container">
-        <div className="batch-page">
-          <h1>Batch #{ number }</h1>
-          <div className="batch-dates">
-            <p>Start date: { startDate && startDate.slice(0, 10) }</p>
-            <p>End date: { endDate && endDate.slice(0, 10) }</p>
+        <header>
+          <div className="batch-info">
+            <h1>Batch #{ number }</h1>
+            <div className="batch-dates">
+              <p>Start date: { startDate && startDate.slice(0, 10) }</p>
+              <p>End date: { endDate && endDate.slice(0, 10) }</p>
+            </div>
           </div>
-        </div>
-        <RaisedButton label="Check class progress" onClick={this.checkClassProgress} primary={true} />
-        <RaisedButton label="Random Student" onClick={this.pickStudent} primary={true} />
+          <div className="edit-buttons">
+            <div>
+              <FloatingActionButton>
+                <ContentCreate />
+              </FloatingActionButton>
+            </div>
+            <div>
+              <FloatingActionButton>
+                <ActionDelete />
+              </FloatingActionButton>
+            </div>
+          </div>
+        </header>
         <div className="add-student">
+          <div className="random-student">
+            <button onClick={this.pickStudent} primary={true}>Unlucky student</button>
+          </div>
           <AddStudentForm batchId={this.props.match.params.batchId} createStudent={this.props.createStudent} />
         </div>
         <div className="batch-performance">

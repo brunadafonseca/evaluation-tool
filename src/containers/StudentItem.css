@@ -17,8 +17,8 @@
 }
 
 .students-card {
-  margin: 2em 1em 1em 0;
-  width: 300px;
+  margin: 2em 0;
+  width: 310px;
   height: 330px;
   background-color: #fff;
   box-shadow: 1.5px 1.5px 10px #CCCCCC;
@@ -28,7 +28,6 @@
   max-width: 400px;
   max-height: 200px;
   overflow: hidden;
-  background-olor: #000;
 }
 
 img {

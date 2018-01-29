@@ -42,7 +42,7 @@ export const updateEvaluation = (batchId, studentId, updates = {}) => {
       .then((result) => {
         dispatch({ type: APP_DONE_LOADING })
         dispatch({ type: LOAD_SUCCESS })
-        dispatch({ type: STUDENT_UPDATED, payload: result.body, batchId })
+        dispatch({ type: STUDENT_UPDATED, payload: { ...result.body, batchId } })
       })
       .catch((error) => {
         dispatch({ type: APP_DONE_LOADING })

@@ -1,6 +1,7 @@
 .batch-container {
   margin: 0 auto;
   text-align: center;
+  padding: 2rem;
 }
 
 .random-question-btn {
@@ -22,6 +23,9 @@
 .green-bar, .orange-bar, .red-bar {
   width: 30%;
   height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .green-bar {
@@ -54,6 +58,40 @@
 .students-list {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: wrap;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.add-student {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.random-student button {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0.5px 1px 15px 1px #CCCCCC;
+  cursor: pointer;
+  font-family: 'Nunito', 'Roboto', 'Helvetica', sans-serif;
+  font-size: 1.5em;
+  font-weight: bolder;
+  background-color: rgb(255, 64, 129);
+  color: white;
+}
+
+.random-student button:hover {
+}
+
+.random-student {
+  display: flex;
+  justify-content: justify;
+  align-content: center;
 }

@@ -1,21 +1,27 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import { createStudent } from '../actions/students/create'
 import Title from '../components/UI/Title'
+import './AddStudentForm.css'
+import Paper from 'material-ui/Paper'
 
 const dialogStyle = {
-  width: '400px',
-  margin: '50px auto',
+  width: '60%',
+  marginLeft: '0',
   padding: '2rem',
+  fontFamily: 'Nunito',
+}
+
+const inputStyle = {
+  multiLine: 'false'
 }
 
 const buttonStyle = {
-  float: 'right',
-  marginLeft: '2rem',
+  marginRight: '0',
+  marginTop: '1rem'
 }
 
 export class AddStudentForm extends PureComponent {
@@ -87,12 +93,12 @@ export class AddStudentForm extends PureComponent {
               errorText={ this.state.photoError}
             />
           </div>
+          <RaisedButton
+            style={ buttonStyle }
+            onClick={ this.submitForm.bind(this) }
+            label="Add new student"
+            primary={true} />
         </form>
-        <RaisedButton
-          style={ buttonStyle }
-          onClick={ this.submitForm.bind(this) }
-          label="Add new student"
-          primary={true} />
       </Paper>
     )
   }

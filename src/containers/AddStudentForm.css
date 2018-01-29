@@ -1,0 +1,27 @@
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.batch-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 60%;
+}
+
+.edit-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-student-form {
+  background-color: #fff;
+  box-shadow: 1.5px 1.5px 10px #CCCCCC;
+  width: 90%;
+  margin: 0 auto;
+}
