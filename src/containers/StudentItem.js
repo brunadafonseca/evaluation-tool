@@ -10,8 +10,10 @@ import './Student.css'
 class StudentItem extends PureComponent {
 
   render() {
+    if (!this.props.evaluations) return null
     const { name, photo, studentId, evaluations, batchId } = this.props
-    console.log(evaluations);
+    const lastEvaluation = evaluations[0]
+
     return (
       <Link to={ `/batches/${batchId}/students/${studentId}` }>
         <div className="students-card">
@@ -20,7 +22,7 @@ class StudentItem extends PureComponent {
           </div>
           <div className="info">
             <p>{name}</p>
-            <div className='whatever'></div> 
+            {lastEvaluation && <div className={`last-evaluation ${lastEvaluation.color}`}></div>}
           </div>
         </div>
       </Link>
