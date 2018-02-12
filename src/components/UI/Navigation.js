@@ -10,13 +10,6 @@ import FlatButton from 'material-ui/FlatButton'
 
 const TITLE = 'Evaluation Tool'
 
-const styles = {
-  smallIcon: {
-    width: 36,
-    height: 36,
-  }
-}
-
 class Navigation extends PureComponent {
   static propTypes = {
     signedIn: PropTypes.bool.isRequired,
@@ -41,7 +34,6 @@ class Navigation extends PureComponent {
     const { signedIn } = this.props
     return (
       <AppBar
-        tytleStyle={{backgroundColor: 'orange'}}
         title={TITLE}
         iconElementLeft={<IconButton onClick={this.goHome}><ActionHome /></IconButton>}
         iconElementRight={signedIn ?
@@ -53,8 +45,10 @@ class Navigation extends PureComponent {
   }
 }
 
+
 const mapStateToProps = ({ currentUser }) => ({
   signedIn: (!!currentUser && !!currentUser._id)
 })
+
 
 export default connect(mapStateToProps, { push, signOut })(Navigation)

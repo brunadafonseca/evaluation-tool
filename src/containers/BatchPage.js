@@ -1,24 +1,25 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { fetchBatchById } from '../actions/batches/fetch'
+
+import PropTypes from 'prop-types'
+
 import { AddStudentForm } from './AddStudentForm'
-import updateBatch, { updateEvaluation, updateBatchPerformance } from '../actions/batches/update'
-import { createStudent } from '../actions/students/create'
-import fetchStudents from '../actions/batches/fetch'
 import StudentItem from './StudentItem'
 import { batchShape } from './BatchItem'
+
+import { createStudent } from '../actions/students/create'
+import fetchStudents, { fetchBatchById } from '../actions/batches/fetch'
+import updateBatch, { updateEvaluation, updateBatchPerformance } from '../actions/batches/update'
+import {deleteBatch} from '../actions/batches/delete'
+
 import './BatchPage.css'
-import RaisedButton from 'material-ui/RaisedButton'
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentCreate from 'material-ui/svg-icons/content/create';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
 
 export class BatchPage extends PureComponent {
-  static propTypes = {
-    ...batchShape,
-    createStudent: PropTypes.func.isRequired,
-    fetchBatchById: PropTypes.func.isRequired
+  static PropTypes = {
+    ...batchShape
   }
 
   componentWillMount() {
@@ -46,18 +47,29 @@ export class BatchPage extends PureComponent {
   }
 
   showPercentage(arr) {
-    const totalStudents = this.props.students.length
+    const totalStudents = this.props.selectedBatch.students.length
+
     return (arr.length / totalStudents) * 100
   }
 
   renderStudents() {
     const students = this.props.students
-    return students.map(student => <StudentItem updateEvaluation={this.props.updateEvaluation} {...student} /> )
+
+    return students.map(student => <StudentItem batchId={this.props.selectedBatch._id}
+                                                studentId={student._id}
+                                                name={student.name}
+                                                photo={student.photo}
+                                                evaluations={student.evaluations} />)
+  }
+
+  handleClick = () => {
+    const batchId = this.props.selectedBatch._id
+
+    this.props.deleteBatch(batchId)
   }
 
   render() {
-    console.log(this.props)
-    const { number, startDate, endDate, batchPerformance, students } = this.props
+    const { number, startDate, endDate, batchPerformance, students, _id } = this.props
 
     return (
       <div className="batch-container">
@@ -77,7 +89,7 @@ export class BatchPage extends PureComponent {
             </div>
             <div>
               <FloatingActionButton>
-                <ActionDelete />
+                <ActionDelete onClick={this.handleClick} />
               </FloatingActionButton>
             </div>
           </div>
@@ -94,24 +106,16 @@ export class BatchPage extends PureComponent {
           <div className='red-bar'>{ (batchPerformance && this.showPercentage(batchPerformance.red)) || 0 }%</div>
         </div>
         <div className="students-list">
-          {students && this.renderStudents()}
+          {this.renderStudents()}
         </div>
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ batches }, { match }) => {
-  const batch = batches.reduce((prev, next) => {
-    if (next._id === match.params.batchId) {
-      return next
-    }
-    return prev
-  }, {})
+const mapStateToProps = state => ({
+  selectedBatch: state.batches.selectedBatch,
+  students: state.batches.selectedBatch.students
+})
 
-  return {
-    ...batch
-  }
-}
-
-export default connect(mapStateToProps, { fetchBatchById, createStudent, fetchStudents, updateEvaluation, updateBatchPerformance, updateBatch })(BatchPage)
+export default connect(mapStateToProps, { fetchBatchById, createStudent, fetchStudents, updateEvaluation, updateBatchPerformance, updateBatch, deleteBatch })(BatchPage)

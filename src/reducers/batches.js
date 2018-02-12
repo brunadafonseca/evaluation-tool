@@ -1,52 +1,58 @@
 import { FETCHED_BATCHES, FETCHED_ONE_BATCH, FETCHED_ONE_STUDENT } from '../actions/batches/fetch'
 import { BATCH_CREATED } from '../actions/batches/create'
 import { STUDENT_CREATED } from '../actions/students/create'
-import { BATCH_UPDATED, STUDENTS_UPDATED, UPDATED_BATCH_PERFORMANCE, BATCH_REMOVED, STUDENT_UPDATED } from '../actions/batches/update'
+import { BATCH_UPDATED,
+         STUDENTS_UPDATED,
+         UPDATED_BATCH_PERFORMANCE,
+         BATCH_REMOVED,
+         STUDENT_UPDATED,
+         CREATED_REPORT}
+from '../actions/batches/update'
 
+const INITIAL_STATE = {
+  allBatches: [],
+  selectedBatch: {
+    number: 'Oops, I think we missed it.',
+    students: [],
+    startDate: new Date(),
+    endDate: new Date(),
+    created_at: new Date(),
+    updated_at: new Date(),
+  },
+  selectedStudent: {
+    evaluations: [],
+    name: '',
+    photo: ''
+  }
+}
 
-export default (state = [], { type, payload } = {}) => {
+// const concatPostTrust = (post, trust) => {
+//   return Object.assign({}, post, { trusts: [].concat(post.trusts, [trust])})
+// }
+
+export default (state = INITIAL_STATE, { type, payload } = {}) => {
   switch (type) {
-    case BATCH_CREATED :
-      const newBatch = { ...payload }
-      return [newBatch].concat(state)
-
     case FETCHED_BATCHES:
-      return [ ...payload ]
+      return Object.assign({}, state, { allBatches: payload})
 
     case FETCHED_ONE_BATCH:
-      const batchIds = state.map(b => b._id)
-      if (batchIds.indexOf(payload._id) < 0) {
-        return [{ ...payload }].concat(state)
-      }
-      return state.map((batch) => {
-        if (batch._id === payload._id) {
-          return { ...payload }
-        }
-        return batch
-      })
+      return { ...state, selectedBatch: payload }
+
+    case BATCH_CREATED:
+      return Object.assign({}, state, { allBatches: [payload].concat(state.allBatches) })
 
     case FETCHED_ONE_STUDENT:
-      return payload
+      return Object.assign({}, state, { selectedStudent: payload })
 
     case STUDENT_CREATED:
     case BATCH_UPDATED:
-      return state.map((batch) => {
-        if (batch._id === payload._id) {
-          return { ...payload }
-        }
-        return batch
-      })
+      return Object.assign({}, state, { selectedBatch: payload })
 
     case STUDENTS_UPDATED:
-      return [{ ...state }].concat(payload)
+      return Object.assign({}, state, { selectedStudent: payload })
 
     case STUDENT_UPDATED:
-      return state.map((batch) => {
-        if (batch._id === payload.batchId) {
-          return { ...payload }
-        }
-        return batch
-      })
+      return Object.assign({}, state, { selectedStudent: payload })
 
     case BATCH_REMOVED:
         return state.filter((batch) => (batch._id !== payload._id))
@@ -58,3 +64,13 @@ export default (state = [], { type, payload } = {}) => {
       return state
   }
 }
+
+
+// case CREATED_REPORT:
+// const updatedReports = state.allPosts.map(post => {
+//   if (post.id === payload.post_id) {
+//     return {...post, reports: [payload].concat(post.reports)}
+//   }
+//   return post
+// })
+//   return Object.assign({}, state, { allPosts: updatedReports, selectedPost: concatPostReport(state.selectedPost, payload), })

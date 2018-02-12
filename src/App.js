@@ -4,6 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import muiTheme from './styles/theme'
 import Navigation from './components/UI/Navigation'
 import Routes from './routes'
+import './App.css'
 
 class App extends Component {
   static childContextTypes = {

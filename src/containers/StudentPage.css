@@ -3,7 +3,8 @@ textarea {
   min-height: 200px;
   border: 0.5px solid #CCCCCC;
   font-family: 'Nunito' !important;
-  font-size: 20px;
+  font-size: 1em;
+  margin-top: 2rem;
 }
 
 .green, .orange, .red {
@@ -12,16 +13,28 @@ textarea {
   margin: 0.07em;
 }
 
-.green, .green-btn {
+.green {
   background-color: #00B749;
 }
 
-.orange, .orange-btn {
+.green:hover{
+  background-color: #00752F;
+}
+
+.orange {
   background-color: #FFBA08;
 }
 
-.red, .red-btn {
+.orange:hover {
+  background-color: #BA8806;
+}
+
+.red {
   background-color: #D00000;
+}
+
+.red:hover {
+  background-color: #850000;
 }
 
 .evaluation-history {
@@ -29,26 +42,58 @@ textarea {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: center;
+  justify-content: flex-start;
 }
+
+/* .evaluation-history > * {
+  width: 3%;
+  max-width: 30px;
+  height: 30px;
+  margin: 0.1rem;
+} */
 
 .student {
   text-align: center;
-  display: flex;
-  flex-direction: row;
-  width: 90%;
-  margin: 0 auto;
+  /* display: flex;
+  flex-direction: row; */
+  width: 40%;
+  min-width: 261px;
+  margin-right: 2rem;
 }
 
-.evaluation-btns > div {
-  margin: 10px;
+.evaluations {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.evaluations > *:hover {
+  cursor: pointer;
 }
 
 .evaluation-btns {
   display: flex;
-  flex-direction: column;
-  margin-right: 30px !important;
+  justify-content: center;
 }
+
+.evaluation-btns > div {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  box-shadow: 1px 1px 5px #A9B2AC;
+  margin: 0.3rem;
+}
+
+.evaluation-btns > *:hover {
+  cursor: pointer;
+}
+
+/* .evaluation-btns {
+  display: flex;
+  margin-right: 30px !important;
+} */
 
 .evaluation-wrap {
   display: flex;
@@ -57,18 +102,42 @@ textarea {
   margin: 0 auto;
 }
 
-form {
+.add-evaluation {
   margin-top: 30px;
-  width: 90%;
+  width: 70%;
+  min-height: 450px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .student-container {
-  padding: 2rem;
+  padding-top: 2rem;
+  display: flex;
 }
 
 .student-photo {
   width: 300px;
   height: 300px;
   overflow: hidden;
+}
+
+.disabled {
+  background-color: #A9B2AC;
+}
+
+.submit-form {
+  align-self: flex-end;
+  margin-top: auto;
+}
+
+textarea {
+  outline: none;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.error-text {
+  color: red;
+  font-size: 1em;
 }
