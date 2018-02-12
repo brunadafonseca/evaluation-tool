@@ -1,45 +1,15 @@
-.horizontal-form form {
-  text-align: center !important;
-}
-
-.input div div input {
-  text-align: center !important;
-  margin: 0 auto !important;
-  width: 100% !important;
-}
-
-hr {
-  width: 100% !important;
-  margin: 0 auto;
-}
-
-.DatePicker {
-  margin: 0 auto;
-}
-
 h3 {
   text-align: center;
   margin-bottom: 20px;
 }
 
-div.input {
-  margin: 0 auto !important;
+.error-text {
+  font-size: 12px;
+  color: red;
 }
 
-body > div:nth-child(5) > div > div:nth-child(1) > div > div > div:nth-child(2) {
-  text-align: center !important;
-  display: flex !important;
-  justify-content: center !important;
-}
-
-body > div:nth-child(5) > div > div:nth-child(1) > div > div > div:nth-child(2) > div > form {
-  margin-bottom: 30px !important;
-  text-align: center !important;
-}
-
-body > div:nth-child(6) > div > div:nth-child(1) > div > div > div:nth-child(2) > div {
-  text-align: center !important;
-}
-body > div:nth-child(6) > div > div:nth-child(1) > div > div > div:nth-child(2) > div > form > div > div:nth-child(2) {
-  margin: 0 auto !important;
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }

@@ -1,10 +1,4 @@
-.BatchesContainer {
-  padding: 20px;
-  margin: 20px auto;
-  width: 80%;
-}
-
-.BatchesContainer .paper {
+.batches-container .paper {
   padding: 30px 50px 15px 50px;
   text-align: center;
   margin: 20px 0;
@@ -14,13 +8,13 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
 .batches h1 {
   text-align: center;
   font-size: 1.5em;
-  padding-bottom: 10px;
+  padding-bottom: 2rem;
 }
 
 .batches {
@@ -28,15 +22,11 @@
 }
 
 .add-batch {
-  padding: 30px 0;
+  padding: 2rem 0;
   position: relative;
-}
-
-#root > div > div:nth-child(2) > div > div:nth-child(1) > div > div {
-  position: absolute;
-  right: 0
 }
 
 .paper {
   font-family: 'Nunito' !important;
+  margin: 1.5rem !important;
 }

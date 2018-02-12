@@ -1,168 +1,196 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import FloatingActionButton from 'material-ui/FloatingActionButton'
+
+import { updateStudent } from '../actions/students/update'
+import { fetchStudentById } from '../actions/batches/fetch'
+
 import ActionThumbUp from 'material-ui/svg-icons/action/thumb-up'
 import ActionThumbDown from 'material-ui/svg-icons/action/thumb-down'
 import ActionThumbsUpDown from 'material-ui/svg-icons/action/thumbs-up-down'
-import { updateEvaluation } from '../actions/batches/update'
-import { fetchStudentById } from '../actions/batches/fetch'
-import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
+
 import './StudentPage.css'
 
-let color = ''
-
 const buttonStyle = {
-  marginRight: '0',
-  marginTop: '1rem'
+  marginRight: '1rem',
 }
 
 export class StudentPage extends PureComponent {
 
   componentWillMount() {
-    color = ''
     const batchId = (this.props.match.params.batchId)
     const studentId = (this.props.match.params.studentId)
 
     this.props.fetchStudentById(batchId, studentId)
   }
 
+  state = {
+    color: '',
+    remark: '',
+    today: new Date().toDateString()
+  }
+
   handleClick = (e) => {
-    color = e.currentTarget.getAttribute('data-id')
-    console.log(color)
+    e.preventDefault()
+
+    this.setState({
+      color: e.currentTarget.value
+    })
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      remark: e.target.value
+    })
+  }
+
+  validateColor = () => {
+    if (this.state.color.length > 1) {
+      this.setState({
+        colorError: null
+      })
+
+      return true
+    }
+
+    this.setState({
+      colorError: 'Color is required'
+    })
+
+    return false
+  }
+
+  validateRemark = () => {
+    if ((this.state.color === 'red' || this.state.color === 'orange') && (this.state.remark.length < 1 )) {
+
+      this.setState({
+        remarkError: 'Remark is required for orange and red color tags'
+      })
+
+      return false
+    }
+
+    this.setState({
+      remarkError: null
+    })
+
+    return true
   }
 
   submitForm(event) {
     event.preventDefault()
-    if (this.validateColor()) {
+
+    if (this.validateColor() && this.validateRemark()) {
+      const student = this.props.student
       const batchId = this.props.match.params.batchId
-      const studentId = this.props.match.params.studentId
+      const evaluations = this.props.student.evaluations
 
       const newEvaluation = {
-          day: Date.now,
-          color: color,
-          remark: this.refs.remark.getValue(),
+          day: Date.now(),
+          color: this.state.color,
+          remark: this.state.remark,
       }
 
-      this.props.updateEvaluation(batchId, studentId, newEvaluation)
-    }
-    return false
-  }
+      const allEvaluations = evaluations.filter(evaluation => {
+        const evaluationDate = new Date(evaluation.day).toDateString()
+        const newEvaluationDate = new Date(newEvaluation.day).toDateString()
 
-  updateBatchPerformance = () => {
-    const batchId = this.props.match.params.batchId
-    const { students } = this.props
-    console.log(this.props)
-
-    const greenStudents = (students.filter(student => {
-      const evaluations = student.evaluations
-      const latestEvaluation = evaluations[evaluations.length-1]
-      return latestEvaluation.color === 'green'
-    }))
-
-    const orangeStudents = (students.filter(student => {
-      const evaluations = student.evaluations
-      const latestEvaluation = evaluations[evaluations.length-1]
-      return latestEvaluation.color === 'orange'
-    }))
-
-    const redStudents = (students.filter(student => {
-      const evaluations = student.evaluations
-      const latestEvaluation = evaluations[evaluations.length-1]
-      return latestEvaluation.color === 'red'
-    }))
-
-    const batchPerformance = {
-      id: batchId,
-      batchPerformance: {
-        green: greenStudents,
-        orange: orangeStudents,
-        red: redStudents
-      }
-    }
-
-    this.props.updateBatch(batchId, batchPerformance)
-  }
-
-  validateColor = () => {
-    if (color.length > 1) {
-      this.setState({
-        nameError: null
+        return ( evaluationDate !== newEvaluationDate )
       })
-      return true
+
+      const updatedStudent = {
+        ...student,
+        evaluations: [ ...allEvaluations, {...newEvaluation}]
+      }
+
+      this.props.updateStudent(batchId, updatedStudent)
     }
 
-    console.log('color is required')
     return false
+  }
+
+  viewEvaluation = (id) => {
+    const evaluations = this.props.student.evaluations
+    const selectedEvaluation = evaluations.filter(evaluation => evaluation._id === id)[0]
+
+    this.setState({
+      color: selectedEvaluation.color,
+      day: selectedEvaluation.day,
+      remark: selectedEvaluation.remark
+    })
+  }
+
+  renderButton = (color) => {
+    return (
+      <button className={`${color} ${this.state.color === `${color}` ? `active` : null}`}
+              value={color}
+              onClick={ this.handleClick }>
+
+              {(color === 'green') ? <ActionThumbUp style={{ color: '#fff' }} /> : null}
+              {(color === 'orange') ? <ActionThumbsUpDown style={{ color: '#fff' }} /> : null}
+              {(color === 'red') ? <ActionThumbDown style={{ color: '#fff' }} /> : null}
+      </button>
+    )
   }
 
   render() {
-    console.log(this.props)
-    const student = this.props.batches
+    if (!this.props.student) return null
+    const { name, photo, evaluations } = this.props.student
 
     return (
       <div className="student-container">
         <div className="student">
-          <div className="student-photo">
-            <img src={ student && student.photo } alt=''/>
-          </div>
-          <div>
-            <h1>{ student && student.name }</h1>
-            <div class="evaluation-history">
-              { student.evaluations && student.evaluations.map(evaluation => <div className={evaluation.color}></div>) }
-            </div>
+          <img src={ photo } alt=''/>
+          <h1>{ name }</h1>
+
+          <p>Last evaluations: </p>
+
+          <div className="evaluations">
+            { evaluations.map(evaluation => <div className={evaluation.color}
+                                                 onClick={() => this.viewEvaluation(evaluation._id)}
+                                                 key={evaluation._id} >
+                                            </div>)}
           </div>
         </div>
 
-        <form onSubmit={this.submitForm.bind(this)}>
-          <h1>Daily evaluation for {(new Date()).toDateString()}</h1>
-          <div className="evaluation-wrap">
+        <form className="add-evaluation" onSubmit={this.submitForm.bind(this)}>
+          <h3>Evaluation for {(this.state.day) ? new Date(this.state.day).toDateString() : this.state.today}</h3>
+
             <div className="evaluation-btns">
-              <FloatingActionButton
-                data-id="green"
-                onClick={this.handleClick.bind(this)}
-                className="green"
-                backgroundColor="#00B749">
-                <ActionThumbUp />
-              </FloatingActionButton>
-              <FloatingActionButton
-                data-id="orange"
-                onClick={this.handleClick.bind(this)}
-                className="orange"
-                backgroundColor="#FFBA08">
-                <ActionThumbsUpDown />
-              </FloatingActionButton>
-              <FloatingActionButton
-                data-id="red"
-                onClick={this.handleClick.bind(this)}
-                className="red"
-                backgroundColor="#D00000">
-                <ActionThumbDown />
-              </FloatingActionButton>
+              {this.renderButton('green')}
+              {this.renderButton('orange')}
+              {this.renderButton('red')}
             </div>
-              <div className="remarks-field">
-                <TextField
-                  ref="remark"
-                  type="text"
-                  hintText="Add a remark" />
-              </div>
+
+            <textarea
+              placeholder="Add a remark..."
+              value={this.state.remark}
+              onChange={this.handleChange}>
+            </textarea>
+
+            <p className="error-text">{this.state.remarkError}</p>
+            <p className="error-text">{this.state.colorError}</p>
+
+            <div className="submit-form">
+              <RaisedButton
+                style={buttonStyle}
+                onClick={this.submitForm.bind(this)}
+                label="Save"
+                primary={true} />
+
+              <RaisedButton
+                onClick={this.submitForm.bind(this)}
+                label="Save and next"
+                primary={true} />
             </div>
-            <RaisedButton
-              style={ buttonStyle }
-              onClick={ this.submitForm.bind(this) }
-              label="Save"
-              primary={true} />
-            <RaisedButton
-              style={ buttonStyle }
-              onClick={ this.submitForm.bind(this) }
-              label="Save and next"
-              primary={true} />
           </form>
         </div>
     )
   }
 }
 
-const mapStateToProps = ({ batches }) => ({ batches })
+const mapStateToProps = state => ({
+  student: state.batches.selectedStudent
+})
 
-export default connect(mapStateToProps, { fetchStudentById, updateEvaluation })(StudentPage)
+export default connect(mapStateToProps, { fetchStudentById, updateStudent })(StudentPage)

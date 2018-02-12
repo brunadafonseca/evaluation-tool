@@ -1,28 +1,16 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+
+import PropTypes from 'prop-types'
+
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import createBatch from '../actions/batches/create'
 import DatePicker from 'material-ui/DatePicker'
+
 import './CreateBatchForm.css'
 
-const dialogStyle = {
-  width: '400px',
-  margin: '20px auto',
-  padding: '2rem',
-}
-
-const buttonStyle = {
-  float: 'right',
-  marginLeft: '2rem',
-}
-
-const optionsStyle = {
-  maxWidth: 255,
-  marginRight: 'auto',
-}
 
 export class CreateBatchForm extends PureComponent {
   static propTypes = {
@@ -31,29 +19,15 @@ export class CreateBatchForm extends PureComponent {
 
   state = {}
 
-  submitForm(event) {
-    event.preventDefault()
-    if (this.validateNumber()) {
-      const batch = {
-        number: this.refs.number.getValue(),
-        startDate: this.state.startDate,
-        endDate: this.state.endDate
-      }
-      this.props.createBatch(batch)
-      this.props.handleClose()
-    }
-    return false
-  }
-
-  handleChangeMinDate = (event, date) => {
+  handleChangeStartDate = (event, date) => {
     this.setState({
-      startDate: date,
+      startDate: date
     })
   }
 
-  handleChangeMaxDate = (event, date) => {
+  handleChangeEndDate = (event, date) => {
     this.setState({
-      endDate: date,
+      endDate: date
     })
   }
 
@@ -64,58 +38,122 @@ export class CreateBatchForm extends PureComponent {
       this.setState({
         numberError: null
       })
+
       return true
     }
 
     this.setState({
       numberError: 'Please provide a number for your new batch'
     })
+
+    return false
+  }
+
+  validateStartDate() {
+    const { startDate } = this.state
+    if (startDate) {
+      this.setState({
+        startDateError: null
+      })
+
+      return true
+    }
+
+    this.setState({
+      startDateError: 'Starting date is required'
+    })
+
+    return false
+  }
+
+  validateEndDate() {
+    const { endDate } = this.state
+
+    if (endDate) {
+      this.setState({
+        endDateError: null
+      })
+
+      return true
+    }
+
+    this.setState({
+      endDateError: 'Ending date is required'
+    })
+
+    return false
+  }
+
+  submitForm(event) {
+    event.preventDefault()
+
+    if (this.validateNumber() && this.validateStartDate() && this.validateEndDate()) {
+      const batch = {
+        number: this.refs.number.getValue(),
+        startDate: this.state.startDate,
+        endDate: this.state.endDate
+      }
+
+      this.props.createBatch(batch)
+      this.props.handleClose()
+      this.props.switchSnackbarState()
+    }
+
     return false
   }
 
   render() {
-    const actions = [
-        <FlatButton
-          label="Cancel"
-          primary={true}
-          onClick={this.handleClose}
-        />
-      ]
-
     return (
-        <div>
-          <form onSubmit={this.submitForm.bind(this)}>
-            <div className="input">
-              <TextField ref="number" type="text" hintText="Batch number: "
-                onChange={this.validateNumber.bind(this)}
-                errorText={ this.state.numberError} />
-                <div style={optionsStyle}>
-                  <DatePicker
-                    onChange={this.handleChangeMinDate}
-                    autoOk={true}
-                    floatingLabelText="Start Date"
-                    disableYearSelection={false}
-                    mode="landscape"
-                  />
-                  <DatePicker
-                    onChange={this.handleChangeMaxDate}
-                    autoOk={true}
-                    floatingLabelText="End Date"
-                    disableYearSelection={false}
-                    mode="landscape"
-                  />
-                </div>
-            </div>
-          </form>
+      <form onSubmit={this.submitForm.bind(this)}>
+        <div className="input">
+          <TextField
+            fullWidth={true}
+            ref="number"
+            type="text"
+            hintText="Batch number: "
+            onChange={this.validateNumber.bind(this)}
+            errorText={ this.state.numberError}
+          />
+
+          <DatePicker
+            ref="startDate"
+            fullWidth={true}
+            onChange={this.handleChangeStartDate}
+            autoOk={true}
+            floatingLabelText="Start Date"
+            disableYearSelection={false}
+            mode="landscape"
+          />
+          <p className="error-text">{this.state.startDateError}</p>
+
+          <DatePicker
+            ref="endDate"
+            fullWidth={true}
+            onChange={this.handleChangeEndDate}
+            autoOk={true}
+            floatingLabelText="End Date"
+            disableYearSelection={false}
+            mode="landscape"
+          />
+          <p className="error-text">{this.state.endDateError}</p>
+        </div>
+
+        <div className="buttons">
           <RaisedButton
             onClick={ this.submitForm.bind(this) }
             label="Submit"
-            primary={true} />
+            primary={true}
+          />
+
+          <FlatButton
+            label="Cancel"
+            primary={true}
+            onClick={this.props.handleClose}
+          />
         </div>
+      </form>
     )
   }
 }
-
-
 
 export default connect(null, { createBatch })(CreateBatchForm)

@@ -8,10 +8,6 @@
   margin: 30px;
 }
 
-.green, .orange, .red {
-  margin: 10px;
-}
-
 .batch-performance {
   display: flex;
   flex-direction: row;

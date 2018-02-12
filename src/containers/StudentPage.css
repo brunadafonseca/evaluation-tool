@@ -1,74 +1,123 @@
-textarea {
-  min-width: 300px;
-  min-height: 200px;
-  border: 0.5px solid #CCCCCC;
-  font-family: 'Nunito' !important;
-  font-size: 20px;
+.error-text {
+  color: red;
+  font-size: 1em;
 }
 
-.green, .orange, .red {
-  width: 40px;
-  height: 40px;
-  margin: 0.07em;
+.disabled {
+  background-color: #A9B2AC;
 }
 
-.green, .green-btn {
-  background-color: #00B749;
-}
-
-.orange, .orange-btn {
-  background-color: #FFBA08;
-}
-
-.red, .red-btn {
-  background-color: #D00000;
-}
-
-.evaluation-history {
-  width: 100%;
+.student-container {
+  max-width: 920px;
+  margin: 0 auto;
+  padding-top: 4rem;
   display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
 }
 
 .student {
   text-align: center;
-  display: flex;
-  flex-direction: row;
-  width: 90%;
-  margin: 0 auto;
-}
-
-.evaluation-btns > div {
-  margin: 10px;
-}
-
-.evaluation-btns {
-  display: flex;
-  flex-direction: column;
-  margin-right: 30px !important;
-}
-
-.evaluation-wrap {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  margin: 0 auto;
-}
-
-form {
-  margin-top: 30px;
-  width: 90%;
-  margin: 0 auto;
-}
-
-.student-container {
-  padding: 2rem;
+  width: 40%;
+  min-width: 261px;
+  margin-right: 2rem;
 }
 
 .student-photo {
   width: 300px;
   height: 300px;
   overflow: hidden;
+}
+
+.green {
+  background-color: #00B749;
+}
+
+.green:hover {
+  background-color: #00752F;
+}
+
+.orange {
+  background-color: #FFBA08;
+}
+
+.orange:hover {
+  background-color: #BA8806;
+}
+
+.red {
+  background-color: #D00000;
+}
+
+.red:hover {
+  background-color: #850000;
+}
+
+textarea {
+  min-width: 300px;
+  min-height: 200px;
+  border: 0.5px solid #CCCCCC;
+  font-family: 'Nunito' !important;
+  font-size: 1em;
+  margin-top: 2rem;
+  outline: none;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.evaluations {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.evaluations > * {
+  width: 40px;
+  height: 40px;
+  margin: 0.1rem;
+}
+
+.evaluations > *:hover {
+  cursor: pointer;
+}
+
+.evaluation-btns {
+  display: flex;
+  justify-content: center;
+  min-height: 62px;
+  max-height: 62px;
+  align-items: flex-start;
+}
+
+.evaluation-btns > button {
+  outline: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 50px;
+  box-shadow: 1px 1px 5px #A9B2AC;
+  width: 50px;
+  height: 50px;
+}
+
+.evaluation-btns > button:hover {
+  cursor: pointer;
+}
+
+.evaluation-btns > button.active {
+  width: 60px;
+  height: 60px;
+}
+
+.add-evaluation {
+  margin-top: 30px;
+  width: 70%;
+  min-height: 450px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.submit-form {
+  align-self: flex-end;
+  margin-top: auto;
 }
