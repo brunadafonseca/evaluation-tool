@@ -130,7 +130,7 @@ export class BatchPage extends PureComponent {
       <div className="batch-container">
         <Paper className="batch-card">
           <div className="batch-info">
-            <h1>Batch #{ number }</h1>
+            <h1>Class #{ number }</h1>
             <div className="batch-dates">
               <p>Start date: { new Date(startDate).toDateString() }</p>
               <p>End date: { new Date(endDate).toDateString() }</p>
