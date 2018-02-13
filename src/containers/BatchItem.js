@@ -2,15 +2,15 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton'
+import Paper from 'material-ui/Paper'
 import './BatchItem.css'
 
 export const batchShape = PropTypes.shape({
     _id: PropTypes.string.isRequired,
     number: PropTypes.number.isRequired,
-    startDate: PropTypes.instanceOf(Date).isRequired,
-    endDate: PropTypes.instanceOf(Date).isRequired,
+    startDate: PropTypes.string.isRequired,
+    endDate: PropTypes.string.isRequired,
     students: PropTypes.array.isRequired,
-    batchPerformance: PropTypes.array
 })
 
 const style = {
@@ -19,14 +19,14 @@ const style = {
 
 class BatchItem extends PureComponent {
   static propTypes = {
-    ...batchShape
+    ...batchShape.isRequired
   }
 
   render() {
-    console.log(this.props);
     const { _id, number, startDate, endDate, students } = this.props
 
     return (
+      <Paper className="paper">
       <div className="batch">
         <p>Batch #{ number }</p>
           {!!(students.length > 0) &&
@@ -36,14 +36,15 @@ class BatchItem extends PureComponent {
             </p>
           }
 
-        <p className="batches-dates">Start date: { startDate && startDate.slice(0, 10) }</p>
-        <p className="batches-dates">End date: { endDate && endDate.slice(0, 10) }</p>
+        <p className="batches-dates">Start date: { new Date(startDate).toDateString() }</p>
+        <p className="batches-dates">End date: { new Date(endDate).toDateString() }</p>
 
       <Link to={ `/batches/${_id}` }>
         <RaisedButton label="View Batch" secondary={true} style={style} />
       </Link>
 
     </div>
+  </Paper>
     )
   }
 }
