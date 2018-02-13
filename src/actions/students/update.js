@@ -7,6 +7,7 @@ import {
 } from '../loading'
 
 export const STUDENT_UPDATED = 'STUDENT_UPDATED'
+export const BATCH_UPDATED = 'BATCH_UPDATED'
 
 const api = new API()
 
@@ -21,7 +22,8 @@ export const updateStudent = (batchId, updatedStudent = {}) => {
         dispatch({ type: APP_DONE_LOADING })
         dispatch({ type: LOAD_SUCCESS })
 
-        dispatch({ type: STUDENT_UPDATED, payload: result.body })
+        dispatch({ type: STUDENT_UPDATED, payload: result.body.updatedStudent })
+        dispatch({ type: BATCH_UPDATED, payload: result.body.updatedBatch })
     })
       .catch((error) => {
         dispatch({ type: APP_DONE_LOADING })

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { replace, push } from 'react-router-redux'
+import PropTypes from 'prop-types'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -34,10 +34,12 @@ export class SignIn extends PureComponent {
 
   submitForm(event) {
     event.preventDefault()
+
     const user = {
       email: this.refs.email.getValue(),
       password: this.refs.password.getValue(),
     }
+
     this.props.signIn(user)
   }
 
@@ -52,16 +54,18 @@ export class SignIn extends PureComponent {
 
         <form onSubmit={this.submitForm.bind(this)}>
           <div className="input">
-            <TextField ref="email" type="email" hintText="Email address" />
+            <TextField ref="email" type="email" hintText="Email address" fullWidth={true} />
           </div>
           <div className="input">
-            <TextField ref="password" type="password" hintText="Password"  />
+            <TextField ref="password" type="password" hintText="Password" fullWidth={true} />
           </div>
         </form>
+
         <FlatButton
           onClick={ this.signUp.bind(this) }
           label="Sign up" />
-        <RaisedButton
+
+      <RaisedButton
           style={ buttonStyle }
           onClick={ this.submitForm.bind(this) }
           label="Sign in"

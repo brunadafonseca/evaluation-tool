@@ -1,13 +1,14 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
+import PropTypes from 'prop-types'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import signUp from '../actions/user/sign-up'
 import Title from '../components/UI/Title'
+
 
 const dialogStyle = {
   width: '400px',
@@ -30,14 +31,17 @@ export class SignUp extends PureComponent {
 
   submitForm(event) {
     event.preventDefault()
+
     if (this.validateAll()) {
       const user = {
         name: this.refs.name.getValue(),
         email: this.refs.email.getValue(),
         password: this.refs.password.getValue()
       }
+
       this.props.signUp(user)
     }
+
     return false
   }
 
@@ -59,12 +63,14 @@ export class SignUp extends PureComponent {
       this.setState({
         nameError: null
       })
+
       return true
     }
 
     this.setState({
       nameError: 'Please provide your name'
     })
+
     return false
   }
 
@@ -75,6 +81,7 @@ export class SignUp extends PureComponent {
       this.setState({
         emailError: null
       })
+
       return true
     }
 
@@ -82,12 +89,14 @@ export class SignUp extends PureComponent {
       this.setState({
         emailError: 'Please provide your email address'
       })
+
       return false
     }
 
     this.setState({
       emailError: 'Please provide a valid email address'
     })
+
     return false
   }
 
@@ -98,6 +107,7 @@ export class SignUp extends PureComponent {
       this.setState({
         passwordError: 'Password is too short'
       })
+
       return false
     }
 
@@ -105,12 +115,14 @@ export class SignUp extends PureComponent {
       this.setState({
         passwordError: null
       })
+
       return true
     }
 
     this.setState({
       passwordError: 'Password should contain both letters and numbers'
     })
+
     return false
   }
 
@@ -121,12 +133,14 @@ export class SignUp extends PureComponent {
       this.setState({
         passwordConfirmationError: null
       })
+
       return true
     }
 
     this.setState({
       passwordConfirmationError: 'Passwords do not match'
     })
+
     return false
   }
 
@@ -135,32 +149,35 @@ export class SignUp extends PureComponent {
       <Paper style={ dialogStyle }>
         <Title content="Sign Up" level={2} />
 
-        <form onSubmit={this.submitForm.bind(this)}>
+        <form onSubmit={this.submitForm.bind(this)} style={{ marginBottom: "1rem"}}>
           <div className="input">
             <TextField ref="name" type="text" hintText="Your name"
+              fullWidth={true}
               onChange={this.validateName.bind(this)}
               errorText={ this.state.nameError} />
-          </div>
-          <div className="input">
+
             <TextField ref="email" type="email" hintText="Email address"
+              fullWidth={true}
               onChange={this.validateEmail.bind(this)}
               errorText={ this.state.emailError} />
-          </div>
-          <div className="input">
+
             <TextField ref="password" type="password" hintText="Password"
+              fullWidth={true}
               onChange={this.validatePassword.bind(this)}
               errorText={ this.state.passwordError} />
-          </div>
-          <div className="input">
+
             <TextField ref="passwordConfirmation" type="password" hintText="Repeat Password"
+              fullWidth={true}
               onKeyUp={this.validatePasswordConfirmation.bind(this)}
               onChange={this.validatePasswordConfirmation.bind(this)}
               errorText={ this.state.passwordConfirmationError} />
           </div>
         </form>
+
         <FlatButton
           onClick={ this.signIn.bind(this) }
           label="Sign in" />
+
         <RaisedButton
           style={ buttonStyle }
           onClick={ this.submitForm.bind(this) }

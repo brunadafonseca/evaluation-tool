@@ -44,13 +44,14 @@ export default (state = INITIAL_STATE, { type, payload } = {}) => {
       return Object.assign({}, state, { selectedStudent: payload })
 
     case STUDENT_CREATED:
+    case STUDENTS_UPDATED:
     case BATCH_UPDATED:
+    console.log(payload);
       return Object.assign({}, state, { selectedBatch: payload })
 
-    case STUDENTS_UPDATED:
-      return Object.assign({}, state, { selectedStudent: payload })
-
     case STUDENT_UPDATED:
+    console.log(payload);
+
       return Object.assign({}, state, { selectedStudent: payload })
 
     case BATCH_REMOVED:
