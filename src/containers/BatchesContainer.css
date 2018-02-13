@@ -24,8 +24,6 @@
 
 .batches-header {
   font-family: 'Source Sans Pro';
-  text-transform: uppercase;
-  font-weight: 300;
   font-size: 1.5em;
   border-bottom: 1px solid #8B8C89;
   flex: 1;

@@ -50,7 +50,7 @@ class BatchesContainer extends PureComponent {
     return (
       <div className="batches-container">
         <div className="header">
-          <h1 className="batches-header">Current batches: </h1>
+          <h1 className="batches-header">Current classes: </h1>
           <div className="add-batch">
             <RaisedButton label="Add a new batch" onClick={this.handleOpen} secondary={true} />
 
@@ -83,7 +83,7 @@ class BatchesContainer extends PureComponent {
 
         { (this.props.upcomingBatches.length > 0 ) ?
           <div>
-            <h1 className="batches-header">Upcoming batches: </h1>
+            <h1 className="batches-header">Upcoming classes: </h1>
             <div className="batches-grid">
               {this.props.upcomingBatches.map(batch => <BatchItem key={batch._id} { ...batch } />)}
             </div>

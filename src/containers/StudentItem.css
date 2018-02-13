@@ -1,6 +1,6 @@
 .last-evaluation {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
 }
 
@@ -18,16 +18,18 @@
 
 .students-card {
   margin: 2em 0;
-  width: 310px;
-  height: 330px;
+  width: 260px;
   background-color: #fff;
   box-shadow: 1.5px 1.5px 10px #CCCCCC;
 }
 
 .profile-picture {
-  max-width: 400px;
-  max-height: 200px;
+  max-width: 260px;
+  min-height: 220px;
+  max-height: 220px;
   overflow: hidden;
+  display: flex;
+  align-items: center;
 }
 
 img {
@@ -39,7 +41,8 @@ img {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 30px;
+  align-items: center;
+  padding: 1rem;
 }
 
 a {
@@ -48,6 +51,6 @@ a {
 }
 
 p {
-  font-size: 1.2em;
+  font-size: 1.1em;
   font-weight: 600;
 }

@@ -7,13 +7,6 @@ header {
   margin: 0 auto;
 }
 
-.batch-info {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 60%;
-}
-
 .edit-buttons {
   display: flex;
   flex-direction: column;
