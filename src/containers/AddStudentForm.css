@@ -25,3 +25,8 @@ header {
   width: 90%;
   margin: 0 auto;
 }
+
+.submit-form-btns {
+  display: flex;
+  justify-content: flex-end;
+}

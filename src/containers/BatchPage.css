@@ -1,6 +1,5 @@
 .batch-container {
   margin: 0 auto;
-  text-align: center;
   padding: 2rem;
 }
 
@@ -12,13 +11,13 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: center;
   color: #fff;
+  margin-bottom: 4rem;
 }
 
 .green-bar, .orange-bar, .red-bar {
   width: 30%;
-  height: 40px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,6 +29,7 @@
 
 .orange-bar {
   background-color: #FFBA08;
+  flex-grow: 1;
 }
 
 .red-bar {
@@ -60,34 +60,41 @@
   margin: 0 auto;
 }
 
-.add-student {
-  width: 90%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: 2rem;
+.random-student {
+  margin-top: auto;
+  margin-left: 2rem;
 }
 
-.random-student button {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
+/* .random-student {
+  width: 200px;
   border: none;
   box-shadow: 0.5px 1px 15px 1px #CCCCCC;
   cursor: pointer;
-  font-family: 'Nunito', 'Roboto', 'Helvetica', sans-serif;
-  font-size: 1.5em;
-  font-weight: bolder;
-  background-color: rgb(255, 64, 129);
+  font-family: 'Source Sans Pro', 'Roboto', 'Helvetica', sans-serif;
+  font-size: 1.2em;
+  font-weight: 300;
+  text-transform: uppercase;
+  padding: 0.5rem;
+  background-color: #000;
   color: white;
-}
+} */
 
-.random-student button:hover {
-}
+/* .random-student button:hover {
+} */
 
-.random-student {
+/* .random-student {
   display: flex;
   justify-content: justify;
   align-content: center;
+} */
+
+.batch-card {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+  margin: 0 !important;
+}
+
+.edit-buttons > * {
+  margin: 0.2rem;
 }

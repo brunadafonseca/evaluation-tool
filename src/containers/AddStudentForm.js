@@ -3,16 +3,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 import { createStudent } from '../actions/students/create'
-import Title from '../components/UI/Title'
 import './AddStudentForm.css'
-import Paper from 'material-ui/Paper'
 
-const dialogStyle = {
-  width: '60%',
-  marginLeft: '0',
-  padding: '2rem',
-  fontFamily: 'Nunito',
+const inputStyle = {
+  marginTop: '1rem',
 }
 
 const buttonStyle = {
@@ -29,15 +25,24 @@ export class AddStudentForm extends PureComponent {
 
   submitForm(event) {
     event.preventDefault()
+
     const batchId = this.props.batchId
+
     if (this.validateName() && this.validatePhoto()) {
       const newStudent = {
-          name: this.refs.name.getValue(),
-          photo: this.refs.photo.getValue(),
+        name: this.refs.name.getValue(),
+        photo: this.refs.photo.getValue(),
+        evaluations: [{
+          day: Date.now,
+          color: 'orange',
+          remark: ''
+        }]
       }
-      console.log(newStudent)
+
       this.props.createStudent(batchId, newStudent)
+      this.props.handleClose()
     }
+
     return false
   }
 
@@ -48,12 +53,14 @@ export class AddStudentForm extends PureComponent {
       this.setState({
         nameError: null
       })
+
       return true
     }
 
     this.setState({
       nameError: 'Name is required'
     })
+
     return false
   }
 
@@ -64,38 +71,47 @@ export class AddStudentForm extends PureComponent {
       this.setState({
         photoError: null
       })
+
       return true
     }
 
     this.setState({
       photoError: 'Photo URL is required'
     })
+
     return false
   }
 
   render() {
     return (
-      <Paper style={ dialogStyle }>
-        <Title content="Add student" level={2} />
+      <form onSubmit={this.submitForm.bind(this)}>
+        <div className="input">
+          <TextField ref="name" type="text" hintText="Student name:"
+            fullWidth={true}
+            onChange={this.validateName.bind(this)}
+            errorText={ this.state.nameError}
+          />
 
-        <form onSubmit={this.submitForm.bind(this)}>
-          <div className="input">
-            <TextField ref="name" type="text" hintText="Student name:"
-              onChange={this.validateName.bind(this)}
-              errorText={ this.state.nameError}
-            />
           <TextField ref="photo" type="text" hintText="Student photo(url):"
-              onChange={this.validatePhoto.bind(this)}
-              errorText={ this.state.photoError}
-            />
-          </div>
+            fullWidth={true}
+            style={ inputStyle }
+            onChange={this.validatePhoto.bind(this)}
+            errorText={ this.state.photoError}
+          />
+        </div>
+        <div className="submit-form-btns">
           <RaisedButton
             style={ buttonStyle }
             onClick={ this.submitForm.bind(this) }
             label="Add new student"
             primary={true} />
-        </form>
-      </Paper>
+          <FlatButton
+            style={ buttonStyle }
+            onClick={ this.props.handleClose }
+            label="Cancel"
+            primary={true} />
+        </div>
+      </form>
     )
   }
 }

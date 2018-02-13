@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import RaisedButton from 'material-ui/RaisedButton'
 import Paper from 'material-ui/Paper'
 import './BatchItem.css'
 
@@ -13,10 +12,6 @@ export const batchShape = PropTypes.shape({
     students: PropTypes.array.isRequired,
 })
 
-const style = {
-  margin: 12,
-}
-
 class BatchItem extends PureComponent {
   static propTypes = {
     ...batchShape.isRequired
@@ -26,29 +21,27 @@ class BatchItem extends PureComponent {
     const { _id, number, startDate, endDate, students } = this.props
 
     return (
-      <Paper className="paper">
-      <div className="batch">
-        <p>Batch #{ number }</p>
-          {!!(students.length > 0) &&
-            <p className="students-count">{(students.length > 1) ?
-                `${students.length} Students` :
-                `${students.length} Student` }
-            </p>
-          }
+      <Paper className="card">
+        <div className="batch">
+          <h3>Batch #{ number }</h3>
 
-        <p className="batches-dates">Start date: { new Date(startDate).toDateString() }</p>
-        <p className="batches-dates">End date: { new Date(endDate).toDateString() }</p>
+          <p className="batches-dates">Start date: { new Date(startDate).toDateString() }</p>
+          <p className="batches-dates">End date: { new Date(endDate).toDateString() }</p>
 
-      <Link to={ `/batches/${_id}` }>
-        <RaisedButton label="View Batch" secondary={true} style={style} />
-      </Link>
-
-    </div>
-  </Paper>
+          <p className="students-count">{(students.length === 1) ?
+              `${students.length} Student` :
+              `${students.length} Students` }
+          </p>
+      </div>
+        <Link to={ `/batches/${_id}` }>
+          <div className="card-footer">
+            <p>View Batch</p>
+          </div>
+        </Link>
+    </Paper>
     )
   }
 }
 
-// const mapStateToProps = ({ batches }) => ({ batches })
 
 export default BatchItem
