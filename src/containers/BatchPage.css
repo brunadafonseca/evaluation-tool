@@ -1,6 +1,7 @@
 .batch-container {
   margin: 0 auto;
   padding: 2rem;
+  max-width: 920px;
 }
 
 .random-question-btn {
