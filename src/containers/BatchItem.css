@@ -1,3 +1,44 @@
+.students-count {
+  margin: 0;
+  margin-top: 2rem;
+}
+
+.card-footer {
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
+}
+
+.card-footer:hover {
+  background-color: #EFF1EF;
+}
+
 .batches-dates {
   font-size: 0.8em;
+}
+
+.batch {
+  padding: 2rem;
+  padding-bottom: 1rem;
+}
+
+.card-footer p {
+  font-size: 1em;
+  text-transform: uppercase;
+  font-family: 'Source Sans Pro', 'Roboto', 'Helvetica', sans-serif;
+  font-weight: 400;
+  color: #FF1053;
+}
+
+.card {
+  font-family: 'Nunito' !important;
+  margin: 1rem !important;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-top: 0;
 }

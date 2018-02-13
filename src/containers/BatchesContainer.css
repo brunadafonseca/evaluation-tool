@@ -1,7 +1,11 @@
-.batches-container .paper {
-  padding: 30px 50px 15px 50px;
+.batches-container .card {
   text-align: center;
   margin: 20px 0;
+}
+
+.batches-container {
+  max-width: 920px;
+  margin: 0 auto;
 }
 
 .batches-grid {
@@ -9,24 +13,27 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  margin: 3rem 0;
 }
 
-.batches h1 {
-  text-align: center;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.batches-header {
+  font-family: 'Source Sans Pro';
+  text-transform: uppercase;
+  font-weight: 300;
   font-size: 1.5em;
-  padding-bottom: 2rem;
-}
-
-.batches {
-  margin-top: 50px;
+  border-bottom: 1px solid #8B8C89;
+  flex: 1;
+  margin: 0;
+  padding-bottom: 1rem;
 }
 
 .add-batch {
-  padding: 2rem 0;
-  position: relative;
-}
-
-.paper {
-  font-family: 'Nunito' !important;
-  margin: 1.5rem !important;
+  margin-left: 2rem;
+  margin-top: auto;
 }

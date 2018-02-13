@@ -49,9 +49,25 @@ class BatchesContainer extends PureComponent {
 
     return (
       <div className="batches-container">
-        <div>
+        <div className="header">
+          <h1 className="batches-header">Current batches: </h1>
           <div className="add-batch">
-            <RaisedButton label="Add a new batch" onClick={this.handleOpen} primary={true} />
+            <RaisedButton label="Add a new batch" onClick={this.handleOpen} secondary={true} />
+
+            <Dialog
+              title="Create a new batch"
+              modal={false}
+              contentStyle={customContentStyle}
+              open={this.state.open}
+              onRequestClose={this.handleClose} >
+
+              <CreateBatchForm
+                handleClose={this.handleClose}
+                createBatch={this.props.createBatch}
+                switchSnackbarState={this.switchSnackbarState}
+              />
+            </Dialog>
+
             <Snackbar
               open={this.state.openSnackbar}
               message={this.state.message}
@@ -59,29 +75,21 @@ class BatchesContainer extends PureComponent {
               onRequestClose={this.handleRequestClose}
             />
           </div>
-
-          <Dialog
-            title="Create a new batch"
-            modal={false}
-            contentStyle={customContentStyle}
-            open={this.state.open}
-            onRequestClose={this.handleClose}>
-
-            <CreateBatchForm
-              handleClose={this.handleClose}
-              createBatch={this.props.createBatch}
-              switchSnackbarState={this.switchSnackbarState}
-            />
-          </Dialog>
         </div>
 
-        <div className="batches">
-          <h1>Current batches: </h1>
-
-          <div className="batches-grid">
-            {this.props.currentBatches.map(batch => <BatchItem key={batch._id} { ...batch } />)}
-          </div>
+        <div className="batches-grid">
+          {this.props.currentBatches.map(batch => <BatchItem key={batch._id} { ...batch } />)}
         </div>
+
+        { (this.props.upcomingBatches.length > 0 ) ?
+          <div>
+            <h1 className="batches-header">Upcoming batches: </h1>
+            <div className="batches-grid">
+              {this.props.upcomingBatches.map(batch => <BatchItem key={batch._id} { ...batch } />)}
+            </div>
+          </div> :
+        null }
+
         <Snackbar
           open={this.state.openSnackbar}
           message={this.state.message}
@@ -98,6 +106,11 @@ const mapStateToProps = state => ({
   currentBatches: state.batches.allBatches.filter(batch => {
     const today = new Date()
     if ((new Date(batch.startDate) <= today) && new Date(batch.endDate) >= today) return batch
+  }),
+
+  upcomingBatches: state.batches.allBatches.filter(batch => {
+    const today = new Date()
+    if ((new Date(batch.startDate) > today)) return batch
   })
 })
 
