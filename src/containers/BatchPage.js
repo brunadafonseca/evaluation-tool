@@ -103,6 +103,14 @@ export class BatchPage extends PureComponent {
                                                 evaluations={student.evaluations} />)
   }
 
+  editBatch = () => {
+    const updatedBatch = {
+      number: this.state.number,
+      startDate: this.state.startDate,
+      endDate: this.state.endDate
+    }
+  }
+
   deleteBatch = () => {
     const batchId = this.props.selectedBatch._id
 
