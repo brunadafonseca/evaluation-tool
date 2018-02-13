@@ -124,7 +124,7 @@ export class StudentPage extends PureComponent {
     return (
       <button className={`${color} ${this.state.color === `${color}` ? `active` : null}`}
               value={color}
-              onClick={ this.handleClick }>
+              onClick={this.handleClick}>
 
               {(color === 'green') ? <ActionThumbUp style={{ color: '#fff' }} /> : null}
               {(color === 'orange') ? <ActionThumbsUpDown style={{ color: '#fff' }} /> : null}

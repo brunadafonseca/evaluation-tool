@@ -5,8 +5,7 @@ import { BATCH_UPDATED,
          STUDENTS_UPDATED,
          UPDATED_BATCH_PERFORMANCE,
          BATCH_REMOVED,
-         STUDENT_UPDATED,
-         CREATED_REPORT}
+         STUDENT_UPDATED}
 from '../actions/batches/update'
 
 const INITIAL_STATE = {
