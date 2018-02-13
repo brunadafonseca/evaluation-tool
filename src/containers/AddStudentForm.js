@@ -15,10 +15,6 @@ const dialogStyle = {
   fontFamily: 'Nunito',
 }
 
-const inputStyle = {
-  multiLine: 'false'
-}
-
 const buttonStyle = {
   marginRight: '0',
   marginTop: '1rem'
