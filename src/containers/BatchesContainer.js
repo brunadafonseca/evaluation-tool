@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Paper from 'material-ui/Paper'
 import './BatchesContainer.css'
 import { CreateBatchForm } from './CreateBatchForm'
 import createBatch from '../actions/batches/create'
@@ -23,7 +22,8 @@ class BatchesContainer extends PureComponent {
 
   state = {
     open: false,
-    openSnackbar: false
+    openSnackbar: false,
+    message: "Batch created!"
   }
 
   switchSnackbarState = () => {
@@ -50,7 +50,7 @@ class BatchesContainer extends PureComponent {
     return (
       <div className="batches-container">
         <div>
-          <div class="add-batch">
+          <div className="add-batch">
             <RaisedButton label="Add a new batch" onClick={this.handleOpen} primary={true} />
             <Snackbar
               open={this.state.openSnackbar}
@@ -79,12 +79,12 @@ class BatchesContainer extends PureComponent {
           <h1>Current batches: </h1>
 
           <div className="batches-grid">
-            {this.props.currentBatches.map(batch => <Paper className="paper"><BatchItem { ...batch } /></Paper>)}
+            {this.props.currentBatches.map(batch => <BatchItem key={batch._id} { ...batch } />)}
           </div>
         </div>
         <Snackbar
           open={this.state.openSnackbar}
-          message="Batch created!"
+          message={this.state.message}
           autoHideDuration={4000}
           onRequestClose={this.setSnackbarState}
         />
