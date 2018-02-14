@@ -1,7 +1,7 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { AddStudentForm } from './AddStudentForm'
-import StudentItem from './StudentItem'
+import { AddStudent } from '../components/forms/AddStudent'
+import StudentItem from '../components/StudentItem'
 import EditBatch from '../components/forms/EditBatch'
 import { createStudent } from '../actions/students/create'
 import { updateStudent } from '../actions/students/update'
@@ -143,23 +143,17 @@ export class BatchPage extends PureComponent {
                                                 evaluations={student.evaluations} />)
   }
 
-  editBatch = () => {
-    const batch = this.props.selectedBatch
-    const id = batch._id
-    const updates = {
-      number: this.state.number,
-      startDate: this.state.startDate,
-      endDate: this.state.endDate
-    }
-
-    const updatedBatch = {
-      ...batch,
-      updates
-    }
-
-    console.log(updatedBatch)
-    // this.props.updateBatch(id)
-  }
+  // editBatch = () => {
+  //   const batch = this.props.selectedBatch
+  //   const id = batch._id
+  //   const updates = {
+  //     number: this.state.number,
+  //     startDate: this.state.startDate,
+  //     endDate: this.state.endDate
+  //   }
+  //
+  //   this.props.updateBatch(id, updates)
+  // }
 
   deleteBatch = () => {
     const batchId = this.props.selectedBatch._id
@@ -276,7 +270,7 @@ export class BatchPage extends PureComponent {
               open={this.state.open}
               onRequestClose={this.handleClose}
             >
-              <AddStudentForm
+              <AddStudent
                 handleClose={this.handleClose}
                 createStudent={this.props.createStudent}
                 batchId={this.props.match.params.batchId}

@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
-import { createStudent } from '../actions/students/create'
-import './AddStudentForm.css'
+import { createStudent } from '../../actions/students/create'
+import './AddStudent.css'
 
 const inputStyle = {
   marginTop: '1rem',
@@ -16,7 +16,7 @@ const buttonStyle = {
   marginTop: '1rem'
 }
 
-export class AddStudentForm extends PureComponent {
+export class AddStudent extends PureComponent {
   static propTypes = {
     createStudent: PropTypes.func.isRequired,
   }
@@ -116,4 +116,4 @@ export class AddStudentForm extends PureComponent {
   }
 }
 
-export default connect(null, { createStudent })(AddStudentForm)
+export default connect(null, { createStudent })(AddStudent)

@@ -1,17 +1,37 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { updateStudent } from '../actions/students/update'
-import { fetchStudentById } from '../actions/batches/fetch'
+import { deleteStudent } from '../actions/students/delete'
+import { fetchStudentById } from '../actions/students/fetch'
+import { fetchBatchById } from '../actions/batches/fetch'
 import './StudentPage.css'
+import EditStudent from '../components/forms/EditStudent'
 
 //material-ui
 import ActionThumbUp from 'material-ui/svg-icons/action/thumb-up'
 import ActionThumbDown from 'material-ui/svg-icons/action/thumb-down'
 import ActionThumbsUpDown from 'material-ui/svg-icons/action/thumbs-up-down'
 import RaisedButton from 'material-ui/RaisedButton'
+import Paper from 'material-ui/Paper'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import ContentCreate from 'material-ui/svg-icons/content/create'
+import ActionDelete from 'material-ui/svg-icons/action/delete'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
 
 const buttonStyle = {
   marginRight: '1rem',
+}
+
+const customContentStyle = {
+  width: '400px',
+  maxWidth: '400px',
+  fontSize: '2rem',
+  textAlign: 'center',
+}
+
+const paperStyle = {
+  fontFamily: 'Source Sans Pro'
 }
 
 export class StudentPage extends PureComponent {
@@ -21,12 +41,49 @@ export class StudentPage extends PureComponent {
     const studentId = (this.props.match.params.studentId)
 
     this.props.fetchStudentById(batchId, studentId)
+    this.props.fetchBatchById(batchId)
   }
 
   state = {
     color: '',
     remark: '',
     today: new Date().toDateString(),
+    open: false,
+    showConfirmation: false,
+  }
+
+  openConfirmation = () => {
+    this.setState({
+      showConfirmation: true,
+    })
+  }
+
+  openForm = () => {
+    this.setState({
+      open: true,
+    })
+  }
+
+  handleClose = () => {
+    this.setState({
+      open: false,
+      showConfirmation: false,
+    })
+  }
+
+  deleteStudent = () => {
+    const studentId = this.props.student._id
+    const batchId = this.props.batch._id
+    const updatedStudents = this.props.batch.students.filter(student => {
+      return student._id !== studentId
+    })
+
+    const updates = {
+      students: updatedStudents
+    }
+
+    this.props.deleteStudent(batchId, updates)
+    this.handleClose()
   }
 
   handleClick = (event) => {
@@ -129,40 +186,92 @@ export class StudentPage extends PureComponent {
   }
 
   render() {
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onClick={this.handleClose}
+      />,
+      <FlatButton
+        label="Delete"
+        primary={true}
+        onClick={this.deleteStudent}
+      />
+    ]
+
     if (!this.props.student) return null
     const { name, photo, evaluations } = this.props.student
 
     return (
-      <div className="student-container">
+      <Paper className="student-container" style={paperStyle}>
         <div className="student">
-          <img src={ photo } alt=''/>
-          <h1>{ name }</h1>
 
-          <p>Last evaluations: </p>
-          <div className="evaluations">
-            { evaluations.map(evaluation => <div className={evaluation.color}
-                                                 onClick={() => this.viewEvaluation(evaluation._id)}
-                                                 key={evaluation._id} >
-                                            </div>)}
+          <div className="photo">
+            <img src={ photo } alt=''/>
+          </div>
+
+          <div className="student-info">
+            <h1>{ name }</h1>
+            <p className="batch-number">Batch #{this.props.batch.number}</p>
+            <div className="last-evaluations">
+              <p>Last evaluations: </p>
+              <div className="evaluations">
+                { evaluations.map(evaluation => <div className={evaluation.color}
+                                                     onClick={() => this.viewEvaluation(evaluation._id)}
+                                                     key={evaluation._id} >
+                                                </div>)}
+              </div>
+            </div>
+          </div>
+
+          <div className="action-buttons">
+            <FloatingActionButton secondary={true} onClick={this.openForm}>
+              <ContentCreate />
+            </FloatingActionButton>
+            <Dialog
+              title="Edit student:"
+              modal={false}
+              contentStyle={customContentStyle}
+              open={this.state.open}
+              onRequestClose={this.handleClose}
+            >
+              <EditStudent {...this.props.student} batchId={this.props.match.params.batchId} handleClose={this.handleClose} /> }
+            </Dialog>
+
+            <FloatingActionButton onClick={this.openConfirmation} secondary={true}>
+              <ActionDelete />
+            </FloatingActionButton>
+
+            <Dialog
+              actions={actions}
+              contentStyle={customContentStyle}
+              modal={false}
+              open={this.state.showConfirmation}
+              onRequestClose={this.handleClose}
+            >
+              Are you sure you want to delete this student?
+            </Dialog>
           </div>
         </div>
 
-        <form className="add-evaluation" onSubmit={this.submitForm.bind(this)}>
-          <h3>Evaluation for {(this.state.day) ? new Date(this.state.day).toDateString() : this.state.today}</h3>
-          <div className="evaluation-btns">
-            {this.renderButton('green')}
-            {this.renderButton('orange')}
-            {this.renderButton('red')}
+        <form onSubmit={this.submitForm.bind(this)}>
+          <h1>Evaluation for {(this.state.day) ? new Date(this.state.day).toDateString() : this.state.today}</h1>
+          <div className="input-field">
+            <div className="evaluation-btns">
+              {this.renderButton('green')}
+              {this.renderButton('orange')}
+              {this.renderButton('red')}
+            </div>
+
+            <textarea
+              placeholder="Add a remark..."
+              value={this.state.remark}
+              onChange={this.handleChange}>
+            </textarea>
+
+            <p className="error-text">{this.state.remarkError}</p>
+            <p className="error-text">{this.state.colorError}</p>
           </div>
-
-          <textarea
-            placeholder="Add a remark..."
-            value={this.state.remark}
-            onChange={this.handleChange}>
-          </textarea>
-
-          <p className="error-text">{this.state.remarkError}</p>
-          <p className="error-text">{this.state.colorError}</p>
 
           <div className="submit-form">
             <RaisedButton
@@ -177,13 +286,14 @@ export class StudentPage extends PureComponent {
               primary={true} />
           </div>
         </form>
-      </div>
+      </Paper>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  student: state.batches.selectedStudent
+  student: state.batches.selectedStudent,
+  batch: state.batches.selectedBatch
 })
 
-export default connect(mapStateToProps, { fetchStudentById, updateStudent })(StudentPage)
+export default connect(mapStateToProps, { fetchStudentById, fetchBatchById, updateStudent, deleteStudent })(StudentPage)
