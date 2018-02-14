@@ -1,16 +1,14 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-
 import PropTypes from 'prop-types'
+import './CreateBatchForm.css'
 
+//material-ui
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import createBatch from '../actions/batches/create'
 import DatePicker from 'material-ui/DatePicker'
-
-import './CreateBatchForm.css'
-
 
 export class CreateBatchForm extends PureComponent {
   static propTypes = {
@@ -38,14 +36,12 @@ export class CreateBatchForm extends PureComponent {
       this.setState({
         numberError: null
       })
-
       return true
     }
 
     this.setState({
       numberError: 'Please provide a number for your new batch'
     })
-
     return false
   }
 
@@ -55,14 +51,12 @@ export class CreateBatchForm extends PureComponent {
       this.setState({
         startDateError: null
       })
-
       return true
     }
 
     this.setState({
       startDateError: 'Starting date is required'
     })
-
     return false
   }
 
@@ -73,14 +67,12 @@ export class CreateBatchForm extends PureComponent {
       this.setState({
         endDateError: null
       })
-
       return true
     }
 
     this.setState({
       endDateError: 'Ending date is required'
     })
-
     return false
   }
 
