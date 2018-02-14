@@ -7,10 +7,6 @@ import {
 } from '../loading'
 
 export const BATCH_UPDATED = 'BATCH_UPDATED'
-export const STUDENT_UPDATED = 'STUDENT_UPDATED'
-export const STUDENTS_UPDATED = 'STUDENTS_UPDATED'
-export const UPDATED_BATCH_PERFORMANCE = 'UPDATED_BATCH_PERFORMANCE'
-export const BATCH_REMOVED = 'BATCH_REMOVED'
 
 const api = new API()
 
@@ -23,26 +19,6 @@ export const updateBatch = (batchId, updates = {}) => {
         dispatch({ type: APP_DONE_LOADING })
         dispatch({ type: LOAD_SUCCESS })
         dispatch({ type: BATCH_UPDATED, payload: result.body })
-      })
-      .catch((error) => {
-        dispatch({ type: APP_DONE_LOADING })
-        dispatch({
-          type: LOAD_ERROR,
-          payload: error.message
-        })
-      })
-  }
-}
-
-export const addStudent = (batchId, newStudent = {}) => {
-  return (dispatch) => {
-    dispatch({ type: APP_LOADING })
-
-    api.post(`/batches/${batchId}/students`, newStudent)
-      .then((result) => {
-        dispatch({ type: APP_DONE_LOADING })
-        dispatch({ type: LOAD_SUCCESS })
-        dispatch({ type: STUDENTS_UPDATED, payload: result.body })
       })
       .catch((error) => {
         dispatch({ type: APP_DONE_LOADING })

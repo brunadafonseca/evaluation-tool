@@ -1,12 +1,11 @@
-import { FETCHED_BATCHES, FETCHED_ONE_BATCH, FETCHED_ONE_STUDENT } from '../actions/batches/fetch'
+import { FETCHED_BATCHES, FETCHED_ONE_BATCH } from '../actions/batches/fetch'
 import { BATCH_CREATED } from '../actions/batches/create'
+import { BATCH_UPDATED } from '../actions/batches/update'
+import { BATCH_DELETED } from '../actions/batches/delete'
+
 import { STUDENT_CREATED } from '../actions/students/create'
-import { BATCH_UPDATED,
-         STUDENTS_UPDATED,
-         UPDATED_BATCH_PERFORMANCE,
-         BATCH_REMOVED,
-         STUDENT_UPDATED}
-from '../actions/batches/update'
+import { STUDENT_UPDATED } from '../actions/students/update'
+import { FETCHED_ONE_STUDENT } from '../actions/students/fetch'
 
 const INITIAL_STATE = {
   allBatches: [],
@@ -40,18 +39,15 @@ export default (state = INITIAL_STATE, { type, payload } = {}) => {
       return Object.assign({}, state, { selectedStudent: payload })
 
     case STUDENT_CREATED:
-    case STUDENTS_UPDATED:
     case BATCH_UPDATED:
       return Object.assign({}, state, { selectedBatch: payload })
 
     case STUDENT_UPDATED:
       return Object.assign({}, state, { selectedStudent: payload })
 
-    case BATCH_REMOVED:
-        return state.filter((batch) => (batch._id !== payload._id))
-
-    case UPDATED_BATCH_PERFORMANCE:
-      return { ...state, payload }
+    case BATCH_DELETED:
+        const updatedBatches = state.allBatches.filter((batch) => (batch._id !== payload._id))
+        return Object.assign({}, state, { allBatches: updatedBatches })
 
     default :
       return state

@@ -1,16 +1,16 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import './CreateBatchForm.css'
+import './CreateBatch.css'
 
 //material-ui
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
-import createBatch from '../actions/batches/create'
+import createBatch from '../../actions/batches/create'
 import DatePicker from 'material-ui/DatePicker'
 
-export class CreateBatchForm extends PureComponent {
+export class CreateBatch extends PureComponent {
   static propTypes = {
     createBatch: PropTypes.func.isRequired,
   }
@@ -148,4 +148,4 @@ export class CreateBatchForm extends PureComponent {
   }
 }
 
-export default connect(null, { createBatch })(CreateBatchForm)
+export default connect(null, { createBatch })(CreateBatch)

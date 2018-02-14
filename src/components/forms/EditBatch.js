@@ -5,9 +5,7 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import DatePicker from 'material-ui/DatePicker'
-
 import { updateBatch } from '../../actions/batches/update'
-// import './AddStudentForm.css'
 
 const buttonStyle = {
   marginRight: '0',
@@ -58,7 +56,6 @@ export class EditBatch extends PureComponent {
 
     return (
       <form onSubmit={this.submitForm.bind(this)} className="edit-batch">
-        <div className="input">
           <TextField
             fullWidth={true}
             ref="number"
@@ -91,7 +88,6 @@ export class EditBatch extends PureComponent {
             disableYearSelection={false}
             mode="landscape"
           />
-        </div>
 
         <div className="submit-form-btns">
           <RaisedButton

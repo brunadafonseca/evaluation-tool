@@ -3,28 +3,19 @@
   font-size: 1em;
 }
 
-.disabled {
-  background-color: #A9B2AC;
-}
-
 .student-container {
   max-width: 920px;
   margin: 0 auto;
-  padding-top: 4rem;
-  display: flex;
+  padding: 3rem;
 }
 
 .student {
-  text-align: center;
-  width: 40%;
-  min-width: 261px;
-  margin-right: 2rem;
-}
-
-.student-photo {
-  width: 300px;
-  height: 300px;
-  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-grow: 2;
+  justify-content: space-between;
+  margin-bottom: 4rem;
+  position: relative;
 }
 
 .green {
@@ -52,20 +43,24 @@
 }
 
 textarea {
-  min-width: 300px;
   min-height: 200px;
   border: 0.5px solid #CCCCCC;
-  font-family: 'Nunito' !important;
+  font-family: 'Roboto' !important;
   font-size: 1em;
-  margin-top: 2rem;
   outline: none;
   padding: 1rem;
   box-sizing: border-box;
+  display: flex;
+  flex-grow: 2;
 }
 
 .evaluations {
   display: flex;
   flex-wrap: wrap;
+}
+
+.last-evaluations {
+  margin-top: auto;
 }
 
 .evaluations > * {
@@ -79,11 +74,7 @@ textarea {
 }
 
 .evaluation-btns {
-  display: flex;
-  justify-content: center;
-  min-height: 62px;
-  max-height: 62px;
-  align-items: flex-start;
+  margin-right: 3rem;
 }
 
 .evaluation-btns > button {
@@ -113,11 +104,59 @@ textarea {
   width: 70%;
   min-height: 450px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
 }
 
 .submit-form {
+  display: flex;
+  justify-content: flex-end;
   align-self: flex-end;
   margin-top: auto;
+}
+
+.photo {
+  width: 30%;
+  max-width: 250px;
+  max-height: 300px;
+  display: flex;
+}
+
+.photo > img {
+  width: 100%;
+  overflow: hidden;
+}
+
+.input-field {
+  display: flex;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.action-buttons > div {
+  margin-bottom: 0.5rem;
+}
+
+.student-info {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-left: 2rem;
+}
+
+.student-info h1 {
+  margin-bottom: 0;
+}
+
+.batch-number {
+  font-weight: 300;
+  text-transform: uppercase;
+  font-size: 1em;
 }

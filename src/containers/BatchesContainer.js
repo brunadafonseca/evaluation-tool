@@ -2,10 +2,10 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import './BatchesContainer.css'
-import { CreateBatchForm } from './CreateBatchForm'
+import { CreateBatch } from '../components/forms/CreateBatch'
 import createBatch from '../actions/batches/create'
 import fetchBatches from '../actions/batches/fetch'
-import BatchItem, { batchShape } from './BatchItem'
+import BatchItem, { batchShape } from '../components/BatchItem'
 import Dialog from 'material-ui/Dialog'
 import RaisedButton from 'material-ui/RaisedButton'
 import Snackbar from 'material-ui/Snackbar';
@@ -61,7 +61,7 @@ class BatchesContainer extends PureComponent {
               open={this.state.open}
               onRequestClose={this.handleClose} >
 
-              <CreateBatchForm
+              <CreateBatch
                 handleClose={this.handleClose}
                 createBatch={this.props.createBatch}
                 switchSnackbarState={this.switchSnackbarState}
