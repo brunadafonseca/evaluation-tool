@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { updateEvaluation } from '../actions/batches/update'
 import { Link } from 'react-router-dom'
 import './StudentItem.css'
 import { fetchBatchById } from '../actions/batches/fetch'
@@ -30,4 +29,4 @@ class StudentItem extends PureComponent {
   }
 }
 
-export default connect(null, { updateEvaluation, fetchBatchById })(StudentItem)
+export default connect(null, { fetchBatchById })(StudentItem)

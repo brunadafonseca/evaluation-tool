@@ -25,10 +25,6 @@ const INITIAL_STATE = {
   }
 }
 
-// const concatPostTrust = (post, trust) => {
-//   return Object.assign({}, post, { trusts: [].concat(post.trusts, [trust])})
-// }
-
 export default (state = INITIAL_STATE, { type, payload } = {}) => {
   switch (type) {
     case FETCHED_BATCHES:
@@ -46,12 +42,9 @@ export default (state = INITIAL_STATE, { type, payload } = {}) => {
     case STUDENT_CREATED:
     case STUDENTS_UPDATED:
     case BATCH_UPDATED:
-    console.log(payload);
       return Object.assign({}, state, { selectedBatch: payload })
 
     case STUDENT_UPDATED:
-    console.log(payload);
-
       return Object.assign({}, state, { selectedStudent: payload })
 
     case BATCH_REMOVED:
@@ -64,13 +57,3 @@ export default (state = INITIAL_STATE, { type, payload } = {}) => {
       return state
   }
 }
-
-
-// case CREATED_REPORT:
-// const updatedReports = state.allPosts.map(post => {
-//   if (post.id === payload.post_id) {
-//     return {...post, reports: [payload].concat(post.reports)}
-//   }
-//   return post
-// })
-//   return Object.assign({}, state, { allPosts: updatedReports, selectedPost: concatPostReport(state.selectedPost, payload), })

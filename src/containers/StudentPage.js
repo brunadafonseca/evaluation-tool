@@ -1,15 +1,14 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-
 import { updateStudent } from '../actions/students/update'
 import { fetchStudentById } from '../actions/batches/fetch'
+import './StudentPage.css'
 
+//material-ui
 import ActionThumbUp from 'material-ui/svg-icons/action/thumb-up'
 import ActionThumbDown from 'material-ui/svg-icons/action/thumb-down'
 import ActionThumbsUpDown from 'material-ui/svg-icons/action/thumbs-up-down'
 import RaisedButton from 'material-ui/RaisedButton'
-
-import './StudentPage.css'
 
 const buttonStyle = {
   marginRight: '1rem',
@@ -27,20 +26,20 @@ export class StudentPage extends PureComponent {
   state = {
     color: '',
     remark: '',
-    today: new Date().toDateString()
+    today: new Date().toDateString(),
   }
 
-  handleClick = (e) => {
-    e.preventDefault()
+  handleClick = (event) => {
+    event.preventDefault()
 
     this.setState({
-      color: e.currentTarget.value
+      color: event.currentTarget.value
     })
   }
 
-  handleChange = (e) => {
+  handleChange = (event) => {
     this.setState({
-      remark: e.target.value
+      remark: event.target.value
     })
   }
 
@@ -49,14 +48,12 @@ export class StudentPage extends PureComponent {
       this.setState({
         colorError: null
       })
-
       return true
     }
 
     this.setState({
-      colorError: 'Color is required'
+      colorError: 'Color tag is required'
     })
-
     return false
   }
 
@@ -66,14 +63,12 @@ export class StudentPage extends PureComponent {
       this.setState({
         remarkError: 'Remark is required for orange and red color tags'
       })
-
       return false
     }
 
     this.setState({
       remarkError: null
     })
-
     return true
   }
 
@@ -86,9 +81,9 @@ export class StudentPage extends PureComponent {
       const evaluations = this.props.student.evaluations
 
       const newEvaluation = {
-          day: Date.now(),
-          color: this.state.color,
-          remark: this.state.remark,
+        day: new Date(),
+        color: this.state.color,
+        remark: this.state.remark,
       }
 
       const allEvaluations = evaluations.filter(evaluation => {
@@ -144,7 +139,6 @@ export class StudentPage extends PureComponent {
           <h1>{ name }</h1>
 
           <p>Last evaluations: </p>
-
           <div className="evaluations">
             { evaluations.map(evaluation => <div className={evaluation.color}
                                                  onClick={() => this.viewEvaluation(evaluation._id)}
@@ -155,36 +149,35 @@ export class StudentPage extends PureComponent {
 
         <form className="add-evaluation" onSubmit={this.submitForm.bind(this)}>
           <h3>Evaluation for {(this.state.day) ? new Date(this.state.day).toDateString() : this.state.today}</h3>
+          <div className="evaluation-btns">
+            {this.renderButton('green')}
+            {this.renderButton('orange')}
+            {this.renderButton('red')}
+          </div>
 
-            <div className="evaluation-btns">
-              {this.renderButton('green')}
-              {this.renderButton('orange')}
-              {this.renderButton('red')}
-            </div>
+          <textarea
+            placeholder="Add a remark..."
+            value={this.state.remark}
+            onChange={this.handleChange}>
+          </textarea>
 
-            <textarea
-              placeholder="Add a remark..."
-              value={this.state.remark}
-              onChange={this.handleChange}>
-            </textarea>
+          <p className="error-text">{this.state.remarkError}</p>
+          <p className="error-text">{this.state.colorError}</p>
 
-            <p className="error-text">{this.state.remarkError}</p>
-            <p className="error-text">{this.state.colorError}</p>
+          <div className="submit-form">
+            <RaisedButton
+              style={buttonStyle}
+              onClick={this.submitForm.bind(this)}
+              label="Save"
+              primary={true} />
 
-            <div className="submit-form">
-              <RaisedButton
-                style={buttonStyle}
-                onClick={this.submitForm.bind(this)}
-                label="Save"
-                primary={true} />
-
-              <RaisedButton
-                onClick={this.submitForm.bind(this)}
-                label="Save and next"
-                primary={true} />
-            </div>
-          </form>
-        </div>
+            <RaisedButton
+              onClick={this.submitForm.bind(this)}
+              label="Save and next"
+              primary={true} />
+          </div>
+        </form>
+      </div>
     )
   }
 }

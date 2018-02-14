@@ -1,11 +1,12 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { AddStudentForm } from './AddStudentForm'
 import StudentItem from './StudentItem'
+import EditBatch from '../components/forms/EditBatch'
 import { createStudent } from '../actions/students/create'
 import { updateStudent } from '../actions/students/update'
 import { fetchBatchById } from '../actions/batches/fetch'
-import updateBatch from '../actions/batches/update'
+import {updateBatch} from '../actions/batches/update'
 import {deleteBatch} from '../actions/batches/delete'
 import './BatchPage.css'
 
@@ -41,6 +42,7 @@ export class BatchPage extends PureComponent {
     showConfirmation: false,
     viewStudent: false,
     studentName: "",
+    showEditForm: false,
   }
 
   pickStudent = () => {
@@ -142,11 +144,21 @@ export class BatchPage extends PureComponent {
   }
 
   editBatch = () => {
-    const updatedBatch = {
+    const batch = this.props.selectedBatch
+    const id = batch._id
+    const updates = {
       number: this.state.number,
       startDate: this.state.startDate,
       endDate: this.state.endDate
     }
+
+    const updatedBatch = {
+      ...batch,
+      updates
+    }
+
+    console.log(updatedBatch)
+    // this.props.updateBatch(id)
   }
 
   deleteBatch = () => {
@@ -164,11 +176,16 @@ export class BatchPage extends PureComponent {
     this.setState({showConfirmation: true})
   }
 
+  openEditForm = () => {
+    this.setState({showEditForm: true})
+  }
+
   handleClose = () => {
     this.setState({
       open: false,
       showConfirmation: false,
-      viewStudent: false
+      viewStudent: false,
+      showEditForm: false,
     })
   }
 
@@ -212,7 +229,6 @@ export class BatchPage extends PureComponent {
       <div className="batch-container">
         <Paper className="batch-card">
           <div className="batch-info">
-
             <h1>Class #{ number }</h1>
 
             <div className="batch-dates">
@@ -222,9 +238,18 @@ export class BatchPage extends PureComponent {
           </div>
 
           <div className="edit-buttons">
-            <FloatingActionButton secondary={true}>
+            <FloatingActionButton secondary={true} onClick={this.openEditForm}>
               <ContentCreate />
             </FloatingActionButton>
+            <Dialog
+              title="Edit batch:"
+              modal={false}
+              contentStyle={customContentStyle}
+              open={this.state.showEditForm}
+              onRequestClose={this.handleClose}
+            >
+              <EditBatch {...this.props.selectedBatch} handleClose={this.handleClose} /> }
+            </Dialog>
 
             <FloatingActionButton onClick={this.openConfirmation} secondary={true}>
               <ActionDelete />
@@ -249,12 +274,11 @@ export class BatchPage extends PureComponent {
               modal={false}
               contentStyle={customContentStyle}
               open={this.state.open}
-              onRequestClose={this.handleClose} >
-
+              onRequestClose={this.handleClose}
+            >
               <AddStudentForm
                 handleClose={this.handleClose}
                 createStudent={this.props.createStudent}
-                switchSnackbarState={this.switchSnackbarState}
                 batchId={this.props.match.params.batchId}
               />
             </Dialog>
@@ -279,8 +303,9 @@ export class BatchPage extends PureComponent {
                   modal={false}
                   open={this.state.viewStudent}
                   onRequestClose={this.handleClose}
-                  >
+                >
                   {this.state.studentName}
+
                   <div className="evaluation-btns">
                     {this.renderButton('green')}
                     {this.renderButton('orange')}
@@ -293,8 +318,7 @@ export class BatchPage extends PureComponent {
             <div className="students-list">
               {this.renderStudents()}
             </div>
-          </div>
-          }
+          </div> }
       </div>
     )
   }

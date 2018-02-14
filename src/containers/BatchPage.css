@@ -82,3 +82,13 @@
   font-size: 3em;
   font-family: 'Source Sans Pro';
 }
+
+.date-pickers {
+  display: flex;
+  flex-grow: 1;
+}
+
+.edit-batch {
+  width: 60%;
+  margin: 0 auto;
+}
