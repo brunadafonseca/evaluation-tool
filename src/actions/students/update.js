@@ -22,8 +22,7 @@ export const updateStudent = (batchId, updatedStudent = {}) => {
         dispatch({ type: APP_DONE_LOADING })
         dispatch({ type: LOAD_SUCCESS })
 
-        dispatch({ type: STUDENT_UPDATED, payload: result.body.updatedStudent })
-        dispatch({ type: BATCH_UPDATED, payload: result.body.updatedBatch })
+        dispatch({ type: STUDENT_UPDATED, payload: result.body })
     })
       .catch((error) => {
         dispatch({ type: APP_DONE_LOADING })

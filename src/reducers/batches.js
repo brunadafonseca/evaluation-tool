@@ -16,11 +16,6 @@ const INITIAL_STATE = {
     endDate: new Date(),
     created_at: new Date(),
     updated_at: new Date(),
-  },
-  selectedStudent: {
-    evaluations: [],
-    name: '',
-    photo: ''
   }
 }
 
@@ -39,11 +34,9 @@ export default (state = INITIAL_STATE, { type, payload } = {}) => {
       return Object.assign({}, state, { selectedStudent: payload })
 
     case STUDENT_CREATED:
+    case STUDENT_UPDATED:
     case BATCH_UPDATED:
       return Object.assign({}, state, { selectedBatch: payload })
-
-    case STUDENT_UPDATED:
-      return Object.assign({}, state, { selectedStudent: payload })
 
     case BATCH_DELETED:
         const updatedBatches = state.allBatches.filter((batch) => (batch._id !== payload._id))

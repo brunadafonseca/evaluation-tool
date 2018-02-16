@@ -105,7 +105,10 @@ const mapStateToProps = state => ({
   batches: state.batches.allBatches,
   currentBatches: state.batches.allBatches.filter(batch => {
     const today = new Date()
-    if ((new Date(batch.startDate) <= today) && new Date(batch.endDate) >= today) return batch
+    const startDate = new Date(batch.startDate)
+    const endDate = new Date(batch.endDate)
+
+    if ((today >= startDate) && (today <= endDate )) return batch
   }),
 
   upcomingBatches: state.batches.allBatches.filter(batch => {
