@@ -23,6 +23,10 @@
   box-shadow: 1.5px 1.5px 10px #CCCCCC;
 }
 
+.students-card:hover {
+  cursor: pointer;
+}
+
 .profile-picture {
   max-width: 260px;
   min-height: 220px;

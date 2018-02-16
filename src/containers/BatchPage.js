@@ -135,25 +135,13 @@ export class BatchPage extends PureComponent {
   renderStudents() {
     const students = this.props.students
 
-    return students.map(student => <StudentItem batchId={this.props.selectedBatch._id}
+    return students.map((student, index) => <StudentItem batchId={this.props.selectedBatch._id}
                                                 studentId={student._id}
                                                 key={student._id}
                                                 name={student.name}
                                                 photo={student.photo}
                                                 evaluations={student.evaluations} />)
   }
-
-  // editBatch = () => {
-  //   const batch = this.props.selectedBatch
-  //   const id = batch._id
-  //   const updates = {
-  //     number: this.state.number,
-  //     startDate: this.state.startDate,
-  //     endDate: this.state.endDate
-  //   }
-  //
-  //   this.props.updateBatch(id, updates)
-  // }
 
   deleteBatch = () => {
     const batchId = this.props.selectedBatch._id
@@ -211,7 +199,7 @@ export class BatchPage extends PureComponent {
       />
     ]
 
-    if (!this.props.students || !this.props.selectedBatch) return null
+    if (!this.props.students) return null
 
     const { number, startDate, endDate } = this.props.selectedBatch
 

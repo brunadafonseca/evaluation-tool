@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { replace, push } from 'react-router-redux'
+
 import { updateStudent } from '../actions/students/update'
 import { deleteStudent } from '../actions/students/delete'
 import { fetchStudentById } from '../actions/students/fetch'
@@ -129,9 +131,12 @@ export class StudentPage extends PureComponent {
     return true
   }
 
-  submitForm(event) {
-    event.preventDefault()
+  saveAndNext = () => {
+    this.updateStudent()
+    this.goToNextStudent()
+  }
 
+  updateStudent = () => {
     if (this.validateColor() && this.validateRemark()) {
       const student = this.props.student
       const batchId = this.props.match.params.batchId
@@ -172,6 +177,27 @@ export class StudentPage extends PureComponent {
     })
   }
 
+  findNextStudentId = () => {
+    const students = this.props.batch.students
+    const studentId = this.props.student._id
+
+    const studentIndex = students.findIndex(student => student._id === studentId)
+    const nextStudentIndex = studentIndex + 1
+
+    if (nextStudentIndex === students.length ) {
+      return students[0]._id
+    }
+
+    return students[nextStudentIndex]._id
+  }
+
+  goToNextStudent = () => {
+    const nextStudentId = this.findNextStudentId()
+    const batchId = this.props.batch._id
+
+    this.props.replace(`/batches/${batchId}/students/${nextStudentId}`)
+  }
+
   renderButton = (color) => {
     return (
       <button className={`${color} ${this.state.color === `${color}` ? `active` : null}`}
@@ -199,7 +225,7 @@ export class StudentPage extends PureComponent {
       />
     ]
 
-    if (!this.props.student) return null
+    if (!this.props.batch || !this.props.student) return null
     const { name, photo, evaluations } = this.props.student
 
     return (
@@ -254,7 +280,7 @@ export class StudentPage extends PureComponent {
           </div>
         </div>
 
-        <form onSubmit={this.submitForm.bind(this)}>
+        <form onSubmit={this.updateStudent.bind(this)}>
           <h1>Evaluation for {(this.state.day) ? new Date(this.state.day).toDateString() : this.state.today}</h1>
           <div className="input-field">
             <div className="evaluation-btns">
@@ -276,12 +302,12 @@ export class StudentPage extends PureComponent {
           <div className="submit-form">
             <RaisedButton
               style={buttonStyle}
-              onClick={this.submitForm.bind(this)}
+              onClick={this.updateStudent.bind(this)}
               label="Save"
               primary={true} />
 
             <RaisedButton
-              onClick={this.submitForm.bind(this)}
+              onClick={this.saveAndNext}
               label="Save and next"
               primary={true} />
           </div>
@@ -291,9 +317,9 @@ export class StudentPage extends PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
-  student: state.batches.selectedStudent,
-  batch: state.batches.selectedBatch
+const mapStateToProps = ({ batches }, { match }) => ({
+  batch: batches.selectedBatch,
+  student: batches.selectedBatch.students.find(student => student._id === match.params.studentId)
 })
 
-export default connect(mapStateToProps, { fetchStudentById, fetchBatchById, updateStudent, deleteStudent })(StudentPage)
+export default connect(mapStateToProps, { fetchStudentById, fetchBatchById, updateStudent, deleteStudent, replace })(StudentPage)

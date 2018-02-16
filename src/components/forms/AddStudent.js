@@ -32,11 +32,6 @@ export class AddStudent extends PureComponent {
       const newStudent = {
         name: this.refs.name.getValue(),
         photo: this.refs.photo.getValue(),
-        evaluations: [{
-          day: Date.now,
-          color: 'orange',
-          remark: ''
-        }]
       }
 
       this.props.createStudent(batchId, newStudent)
