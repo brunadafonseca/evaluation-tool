@@ -1,11 +1,12 @@
-.batches-container .card {
-  text-align: center;
-  margin: 20px 0;
+.batches-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
 }
 
-.batches-container {
-  max-width: 920px;
-  margin: 0 auto;
+.add-batch {
+  margin-left: 2rem;
+  margin-top: auto;
 }
 
 .batches-grid {
@@ -14,24 +15,4 @@
   flex-wrap: wrap;
   justify-content: center;
   margin: 3rem 0;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-
-.batches-header {
-  font-family: 'Source Sans Pro';
-  font-size: 1.5em;
-  border-bottom: 1px solid #8B8C89;
-  flex: 1;
-  margin: 0;
-  padding-bottom: 1rem;
-}
-
-.add-batch {
-  margin-left: 2rem;
-  margin-top: auto;
 }

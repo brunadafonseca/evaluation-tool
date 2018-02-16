@@ -61,7 +61,7 @@ export class AddStudent extends PureComponent {
             primary={true} />
           <FlatButton
             style={ buttonStyle }
-            onClick={ this.props.handleClose }
+            onClick={ this.props.toggleOpenState }
             label="Cancel"
             primary={true} />
         </div>

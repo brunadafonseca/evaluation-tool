@@ -1,25 +1,26 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { replace, push } from 'react-router-redux'
-
+import { replace } from 'react-router-redux'
 import { updateStudent } from '../actions/students/update'
 import { deleteStudent } from '../actions/students/delete'
 import { fetchStudentById } from '../actions/students/fetch'
 import { fetchBatchById } from '../actions/batches/fetch'
-import './StudentPage.css'
 import EditStudent from '../components/forms/EditStudent'
 
-//material-ui
-import ActionThumbUp from 'material-ui/svg-icons/action/thumb-up'
-import ActionThumbDown from 'material-ui/svg-icons/action/thumb-down'
-import ActionThumbsUpDown from 'material-ui/svg-icons/action/thumbs-up-down'
-import RaisedButton from 'material-ui/RaisedButton'
-import Paper from 'material-ui/Paper'
-import FloatingActionButton from 'material-ui/FloatingActionButton'
-import ContentCreate from 'material-ui/svg-icons/content/create'
-import ActionDelete from 'material-ui/svg-icons/action/delete'
-import Dialog from 'material-ui/Dialog'
-import FlatButton from 'material-ui/FlatButton'
+import './StudentPage.css'
+
+import {
+  Paper,
+  FloatingActionButton,
+  ContentCreate,
+  ActionDelete,
+  Dialog,
+  RaisedButton,
+  FlatButton,
+  ActionThumbUp,
+  ActionThumbDown,
+  ActionThumbsUpDown
+} from './material-ui'
 
 const buttonStyle = {
   marginRight: '1rem',
@@ -40,9 +41,7 @@ export class StudentPage extends PureComponent {
 
   componentWillMount() {
     const batchId = (this.props.match.params.batchId)
-    const studentId = (this.props.match.params.studentId)
 
-    this.props.fetchStudentById(batchId, studentId)
     this.props.fetchBatchById(batchId)
   }
 
@@ -54,38 +53,24 @@ export class StudentPage extends PureComponent {
     showConfirmation: false,
   }
 
-  openConfirmation = () => {
+  toggleShowConfirmationState = () => {
     this.setState({
-      showConfirmation: true,
+      showConfirmation: !this.state.showConfirmation,
     })
   }
 
-  openForm = () => {
+  toggleOpenState = () => {
     this.setState({
-      open: true,
-    })
-  }
-
-  handleClose = () => {
-    this.setState({
-      open: false,
-      showConfirmation: false,
+      open: !this.state.open,
     })
   }
 
   deleteStudent = () => {
     const studentId = this.props.student._id
     const batchId = this.props.batch._id
-    const updatedStudents = this.props.batch.students.filter(student => {
-      return student._id !== studentId
-    })
 
-    const updates = {
-      students: updatedStudents
-    }
-
-    this.props.deleteStudent(batchId, updates)
-    this.handleClose()
+    this.props.deleteStudent(batchId, studentId)
+    this.toggleShowConfirmationState()
   }
 
   handleClick = (event) => {
@@ -132,11 +117,11 @@ export class StudentPage extends PureComponent {
   }
 
   saveAndNext = () => {
-    this.updateStudent()
+    this.updateStudentEvaluations()
     this.goToNextStudent()
   }
 
-  updateStudent = () => {
+  updateStudentEvaluations = () => {
     if (this.validateColor() && this.validateRemark()) {
       const student = this.props.student
       const batchId = this.props.match.params.batchId
@@ -216,7 +201,7 @@ export class StudentPage extends PureComponent {
       <FlatButton
         label="Cancel"
         primary={true}
-        onClick={this.handleClose}
+        onClick={this.toggleShowConfirmationState}
       />,
       <FlatButton
         label="Delete"
@@ -251,7 +236,7 @@ export class StudentPage extends PureComponent {
           </div>
 
           <div className="action-buttons">
-            <FloatingActionButton secondary={true} onClick={this.openForm}>
+            <FloatingActionButton secondary={true} onClick={this.toggleOpenState}>
               <ContentCreate />
             </FloatingActionButton>
             <Dialog
@@ -259,12 +244,12 @@ export class StudentPage extends PureComponent {
               modal={false}
               contentStyle={customContentStyle}
               open={this.state.open}
-              onRequestClose={this.handleClose}
+              onRequestClose={this.toggleOpenState}
             >
-              <EditStudent {...this.props.student} batchId={this.props.match.params.batchId} handleClose={this.handleClose} /> }
+              <EditStudent {...this.props.student} batchId={this.props.match.params.batchId} toggleOpenState={this.toggleOpenState} /> }
             </Dialog>
 
-            <FloatingActionButton onClick={this.openConfirmation} secondary={true}>
+            <FloatingActionButton onClick={this.toggleShowConfirmationState} secondary={true}>
               <ActionDelete />
             </FloatingActionButton>
 
@@ -280,7 +265,7 @@ export class StudentPage extends PureComponent {
           </div>
         </div>
 
-        <form onSubmit={this.updateStudent.bind(this)}>
+        <form onSubmit={this.updateStudentEvaluations.bind(this)}>
           <h1>Evaluation for {(this.state.day) ? new Date(this.state.day).toDateString() : this.state.today}</h1>
           <div className="input-field">
             <div className="evaluation-btns">
@@ -302,7 +287,7 @@ export class StudentPage extends PureComponent {
           <div className="submit-form">
             <RaisedButton
               style={buttonStyle}
-              onClick={this.updateStudent.bind(this)}
+              onClick={this.updateStudentEvaluations.bind(this)}
               label="Save"
               primary={true} />
 

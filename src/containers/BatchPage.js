@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { AddStudent } from '../components/forms/AddStudent'
 import StudentItem from '../components/StudentItem'
@@ -6,22 +6,25 @@ import EditBatch from '../components/forms/EditBatch'
 import { createStudent } from '../actions/students/create'
 import { updateStudent } from '../actions/students/update'
 import { fetchBatchById } from '../actions/batches/fetch'
-import {updateBatch} from '../actions/batches/update'
-import {deleteBatch} from '../actions/batches/delete'
-import './BatchPage.css'
+import { updateBatch } from '../actions/batches/update'
+import { deleteBatch } from '../actions/batches/delete'
 
-//material-ui
-import Paper from 'material-ui/Paper'
-import ContentAdd from 'material-ui/svg-icons/content/add'
-import FloatingActionButton from 'material-ui/FloatingActionButton'
-import ContentCreate from 'material-ui/svg-icons/content/create'
-import ActionDelete from 'material-ui/svg-icons/action/delete'
-import Dialog from 'material-ui/Dialog'
-import RaisedButton from 'material-ui/RaisedButton'
-import FlatButton from 'material-ui/FlatButton'
-import ActionThumbUp from 'material-ui/svg-icons/action/thumb-up'
-import ActionThumbDown from 'material-ui/svg-icons/action/thumb-down'
-import ActionThumbsUpDown from 'material-ui/svg-icons/action/thumbs-up-down'
+import {
+  Paper,
+  ContentAdd,
+  FloatingActionButton,
+  ContentCreate,
+  ActionDelete,
+  Dialog,
+  RaisedButton,
+  FlatButton,
+  ActionThumbUp,
+  ActionThumbDown,
+  ActionThumbsUpDown
+} from './material-ui'
+
+
+import './BatchPage.css'
 
 const customContentStyle = {
   width: '400px',
@@ -154,7 +157,7 @@ export class BatchPage extends PureComponent {
     this.setState({open: true})
   }
 
-  openConfirmation = () => {
+  toggleShowConfirmationState = () => {
     this.setState({showConfirmation: true})
   }
 
@@ -208,7 +211,7 @@ export class BatchPage extends PureComponent {
     const redPercentage = this.showPercentage('red')
 
     return (
-      <div className="batch-container">
+      <Fragment>
         <Paper className="batch-card">
           <div className="batch-info">
             <h1>Class #{ number }</h1>
@@ -233,7 +236,7 @@ export class BatchPage extends PureComponent {
               <EditBatch {...this.props.selectedBatch} handleClose={this.handleClose} /> }
             </Dialog>
 
-            <FloatingActionButton onClick={this.openConfirmation} secondary={true}>
+            <FloatingActionButton onClick={this.toggleShowConfirmationState} secondary={true}>
               <ActionDelete />
             </FloatingActionButton>
 
@@ -301,7 +304,7 @@ export class BatchPage extends PureComponent {
               {this.renderStudents()}
             </div>
           </div> }
-      </div>
+      </Fragment>
     )
   }
 }

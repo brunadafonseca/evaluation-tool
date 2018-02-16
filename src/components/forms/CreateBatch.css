@@ -1,15 +1,4 @@
-h3 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.error-text {
-  font-size: 12px;
-  color: red;
-}
-
-.buttons {
+/* .form-buttons {
   display: flex;
-  flex-direction: row;
   justify-content: flex-end;
-}
+} */
