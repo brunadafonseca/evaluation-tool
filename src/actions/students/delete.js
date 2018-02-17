@@ -7,22 +7,22 @@ import {
 } from '../loading'
 import { push } from 'react-router-redux'
 
-export const BATCH_UPDATED = 'BATCH_UPDATED'
+export const STUDENT_DELETED = 'STUDENT_DELETED'
 
 const api = new API()
 
-export const deleteStudent = (batchId, updates = {}) => {
+export const deleteStudent = (batchId, studentId) => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
 
-    api.patch(`/batches/${batchId}`, updates)
+    api.delete(`/batches/${batchId}/students/${studentId}`)
       .then((result) => {
         dispatch({ type: APP_DONE_LOADING })
         dispatch({ type: LOAD_SUCCESS })
 
+        dispatch({ type: STUDENT_DELETED, payload: result.body })
+        
         dispatch(push(`/batches/${batchId}`))
-
-        dispatch({ type: BATCH_UPDATED, payload: result.body })
       })
       .catch((error) => {
         dispatch({ type: APP_DONE_LOADING })

@@ -1,14 +1,15 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import './CreateBatch.css'
+import createBatch from '../../actions/batches/create'
 
 //material-ui
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
-import createBatch from '../../actions/batches/create'
 import DatePicker from 'material-ui/DatePicker'
+
+import './CreateBatch.css'
 
 export class CreateBatch extends PureComponent {
   static propTypes = {
@@ -76,10 +77,18 @@ export class CreateBatch extends PureComponent {
     return false
   }
 
+  validateAll() {
+    return(
+      this.validateNumber() &&
+      this.validateStartDate() &&
+      this.validateEndDate()
+    )
+  }
+
   submitForm(event) {
     event.preventDefault()
 
-    if (this.validateNumber() && this.validateStartDate() && this.validateEndDate()) {
+    if (this.validateAll()) {
       const batch = {
         number: this.refs.number.getValue(),
         startDate: this.state.startDate,
@@ -87,8 +96,8 @@ export class CreateBatch extends PureComponent {
       }
 
       this.props.createBatch(batch)
-      this.props.handleClose()
-      this.props.switchSnackbarState()
+      this.props.toggleFormState()
+      this.props.toggleSnackbarState()
     }
 
     return false
@@ -110,37 +119,37 @@ export class CreateBatch extends PureComponent {
           <DatePicker
             ref="startDate"
             fullWidth={true}
-            onChange={this.handleChangeStartDate}
             autoOk={true}
             floatingLabelText="Start Date"
             disableYearSelection={false}
             mode="landscape"
+            onChange={this.handleChangeStartDate}
+            errorText={this.state.startDateError}
           />
-          <p className="error-text">{this.state.startDateError}</p>
 
           <DatePicker
             ref="endDate"
             fullWidth={true}
-            onChange={this.handleChangeEndDate}
             autoOk={true}
             floatingLabelText="End Date"
             disableYearSelection={false}
             mode="landscape"
+            onChange={this.handleChangeEndDate}
+            errorText={this.state.endDateError}
           />
-          <p className="error-text">{this.state.endDateError}</p>
         </div>
 
-        <div className="buttons">
+        <div className="form-buttons">
           <RaisedButton
-            onClick={ this.submitForm.bind(this) }
             label="Submit"
             primary={true}
+            onClick={this.submitForm.bind(this)}
           />
 
           <FlatButton
             label="Cancel"
             primary={true}
-            onClick={this.props.handleClose}
+            onClick={this.props.toggleFormState}
           />
         </div>
       </form>

@@ -5,6 +5,7 @@ import { BATCH_DELETED } from '../actions/batches/delete'
 
 import { STUDENT_CREATED } from '../actions/students/create'
 import { STUDENT_UPDATED } from '../actions/students/update'
+import { STUDENT_DELETED } from '../actions/students/delete'
 import { FETCHED_ONE_STUDENT } from '../actions/students/fetch'
 
 const INITIAL_STATE = {
@@ -35,6 +36,7 @@ export default (state = INITIAL_STATE, { type, payload } = {}) => {
 
     case STUDENT_CREATED:
     case STUDENT_UPDATED:
+    case STUDENT_DELETED:
     case BATCH_UPDATED:
       return Object.assign({}, state, { selectedBatch: payload })
 
