@@ -74,7 +74,7 @@ class BatchesContainer extends PureComponent {
               open={this.state.openSnackbar}
               message={this.state.message}
               autoHideDuration={4000}
-              onRequestClose={this.handleRequestClose}
+              onRequestClose={this.toggleSnackbarState}
             />
           </div>
         </div>
